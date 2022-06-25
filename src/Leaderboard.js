@@ -27,8 +27,16 @@ function Leaderboard() {
     }
   };
 
+  // useEffect(() => {
+  //   getPlayers();
+  // }, []);
+
   useEffect(() => {
     getPlayers();
+    const interval = setInterval(() => getPlayers(), 20000);
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   if (players?.length) {
