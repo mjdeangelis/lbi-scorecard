@@ -11,7 +11,7 @@ function Leaderboard() {
   const getPlayers = async () => {
     try {
       const res = await fetch(
-        `${process.env.REACT_APP_API_URL}players/getTournamentPlayers/62acee1f82eee941e40ee295`
+        `${process.env.REACT_APP_API_URL}players/getTournamentPlayers/62b66f3a823df6535020cf38`
       );
       const players = await res.json();
       setPlayers(createLeaderboard(players));

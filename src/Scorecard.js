@@ -14,15 +14,34 @@ function Scorecard() {
   const [newScores, setNewScores] = useState([0, 0]);
   const tournament = useContext(TournamentContext);
 
-  const isEmptyScore = (scoresArr) => {
-    scoresArr.every((item) => item === 0);
-  };
-
   const getPrevHole = (currentHole) =>
     currentHole - 1 < 1 ? 18 : currentHole - 1;
 
   const getNextHole = (currentHole) =>
     currentHole + 1 > 18 ? 1 : currentHole + 1;
+
+  const validateScores = (callback, nextHole) => {
+    const hasEmptyScore = newScores.filter(
+      (score) => score === 0 || score === null || score === ""
+    ).length;
+    if (hasEmptyScore) {
+      const text =
+        "You have an empty score. Are you sure you want to go to next hole?";
+      if (window.confirm(text) === true) {
+        callback(nextHole);
+      } else {
+        return;
+      }
+    } else {
+      callback(nextHole);
+    }
+  };
+
+  const handleScoreOnBlur = (newScore, i = null) => {
+    if (newScore === "" || newScore === 0) {
+      handleSetNewScores(0, i);
+    }
+  };
 
   const handleSetNewScores = (newScore, i = null) => {
     // If we don't pass an index, we're updating both scores
@@ -62,6 +81,7 @@ function Scorecard() {
   };
 
   const updatePlayerScore = async (newScores, par) => {
+    console.log("updatePlayerScore()");
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -90,7 +110,12 @@ function Scorecard() {
   useEffect(() => {
     console.log("newScores changed", newScores);
     const isEmptyScore = newScores.every((item) => item === 0);
-    if (!isEmptyScore) {
+    const hasNullScore = newScores.filter(
+      (item) => item === null || item === ""
+    ).length;
+    console.log("isEmptyScore", isEmptyScore);
+    console.log("hasNullScore", hasNullScore);
+    if (!isEmptyScore && !hasNullScore) {
       console.log("Updated score.");
       updatePlayerScore(newScores, tournament?.holes[currentHole - 1].par);
     } else {
@@ -105,7 +130,9 @@ function Scorecard() {
         <div className="scorecard-header">
           <button
             className="nav-btn"
-            onClick={() => setCurrentHole(getPrevHole(currentHole))}
+            onClick={() =>
+              validateScores(setCurrentHole, getPrevHole(currentHole))
+            }
           >
             &lt; Hole {getPrevHole(currentHole)}
           </button>
@@ -118,7 +145,10 @@ function Scorecard() {
           </div>
           <button
             className="nav-btn"
-            onClick={() => setCurrentHole(getNextHole(currentHole))}
+            // onClick={() => setCurrentHole(getNextHole(currentHole))}
+            onClick={() =>
+              validateScores(setCurrentHole, getNextHole(currentHole))
+            }
           >
             Hole {getNextHole(currentHole)} &gt;
           </button>
@@ -144,6 +174,9 @@ function Scorecard() {
                         type="text"
                         maxLength={2}
                         inputMode="numeric"
+                        onBlur={(event) =>
+                          handleScoreOnBlur(event.target.value, i)
+                        }
                         value={newScores[i]}
                         onChange={(event) =>
                           handleSetNewScores(event.target.value, i)
