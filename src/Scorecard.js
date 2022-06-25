@@ -98,7 +98,7 @@ function Scorecard() {
     }
   }, [newScores]);
 
-  if (player?.name) {
+  if (tournament.name && player?.name) {
     return (
       <div>
         <Header />
@@ -143,6 +143,7 @@ function Scorecard() {
                       <input
                         type="text"
                         maxLength={2}
+                        inputmode="numeric"
                         value={newScores[i]}
                         onChange={(event) =>
                           handleSetNewScores(event.target.value, i)
