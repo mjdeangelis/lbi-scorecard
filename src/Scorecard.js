@@ -4,8 +4,6 @@ import { TournamentContext } from "./App";
 import { Header } from "./Header";
 import { Loading } from "./Loading";
 
-const API_URL_BASE = "http://localhost:7777/api/"; // todo: make global
-
 /* todo
  * Figure out how to store hole/course data globally (figuring out par on each hole)
  */
@@ -41,7 +39,9 @@ function Scorecard() {
   };
 
   const getPlayerDetails = async (id) => {
-    const res = await fetch(`${API_URL_BASE}/players/details/${id}`);
+    const res = await fetch(
+      `${process.env.REACT_APP_API_URL}/players/details/${id}`
+    );
     const newPlayer = await res.json();
     setPlayer(newPlayer);
     setCurrentHole(newPlayer.currentHole);
@@ -54,7 +54,7 @@ function Scorecard() {
       body: JSON.stringify({ id: player._id, currentHole: newHole }),
     };
     const response = await fetch(
-      `${API_URL_BASE}/players/updateHole`,
+      `${process.env.REACT_APP_API_URL}/players/updateHole`,
       requestOptions
     );
     const data = await response.json();
@@ -68,7 +68,7 @@ function Scorecard() {
       body: JSON.stringify({ id: player._id, currentHole, newScores, par }),
     };
     const response = await fetch(
-      `${API_URL_BASE}/players/updateScore`,
+      `${process.env.REACT_APP_API_URL}/players/updateScore`,
       requestOptions
     );
     const data = await response.json();

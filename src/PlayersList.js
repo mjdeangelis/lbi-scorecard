@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import { TournamentContext } from "./App";
 import icon from "./golf-icon.png";
 
-const API_URL_BASE = "http://localhost:7777/api/"; // todo: make global
-
 export function PlayersList() {
   const [players, setPlayers] = useState([]);
   const [currentPlayer, setCurrentPlayer] = useState({});
@@ -14,7 +12,7 @@ export function PlayersList() {
   const getPlayers = async () => {
     try {
       const res = await fetch(
-        `${API_URL_BASE}players/getTournamentPlayers/62b66f3a823df6535020cf38`
+        `${process.env.REACT_APP_API_URL}players/getTournamentPlayers/62b66f3a823df6535020cf38`
       );
       const players = await res.json();
       setPlayers(players);

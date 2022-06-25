@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const API_URL_BASE = "http://localhost:7777/api/"; // todo: make global
-
 function Leaderboard() {
   const [players, setPlayers] = useState([]);
 
@@ -13,7 +11,7 @@ function Leaderboard() {
   const getPlayers = async () => {
     try {
       const res = await fetch(
-        `${API_URL_BASE}players/getTournamentPlayers/62acee1f82eee941e40ee295`
+        `${process.env.REACT_APP_API_URL}players/getTournamentPlayers/62acee1f82eee941e40ee295`
       );
       const players = await res.json();
       setPlayers(createLeaderboard(players));

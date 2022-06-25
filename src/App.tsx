@@ -8,7 +8,6 @@ import { Home } from "./Home";
 import Leaderboard from "./Leaderboard";
 import Scorecard from "./Scorecard";
 
-const API_URL_BASE = "http://localhost:7777/api/"; // todo: make global
 export const TournamentContext = createContext({});
 export const LoadingContext = createContext(false);
 
@@ -18,7 +17,7 @@ function App() {
   const getTournament = async () => {
     try {
       const res = await fetch(
-        `${API_URL_BASE}tournaments/getTournament/62b66f3a823df6535020cf38`
+        `${process.env.REACT_APP_API_URL}tournaments/getTournament/62b66f3a823df6535020cf38`
       );
       const tournament = await res.json();
       setTournament(tournament);
