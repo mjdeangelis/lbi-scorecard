@@ -43,6 +43,14 @@ function Scorecard() {
     }
   };
 
+  const handleScoreOnFocus = (newScore, i = null) => {
+    console.log("handleScoreOnFocus", newScore);
+    if (newScore == 0) {
+      console.log("zero score");
+      handleSetNewScores("", i);
+    }
+  };
+
   const handleSetNewScores = (newScore, i = null) => {
     // If we don't pass an index, we're updating both scores
     if (i === null) {
@@ -174,6 +182,9 @@ function Scorecard() {
                         type="text"
                         maxLength={2}
                         inputMode="numeric"
+                        onFocus={(event) =>
+                          handleScoreOnFocus(event.target.value, i)
+                        }
                         onBlur={(event) =>
                           handleScoreOnBlur(event.target.value, i)
                         }
