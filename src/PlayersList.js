@@ -10,6 +10,7 @@ export function PlayersList() {
   const tournament = useContext(TournamentContext);
 
   const getPlayers = async () => {
+    console.log("getPlayers()");
     try {
       const res = await fetch(
         `${process.env.REACT_APP_API_URL}players/getTournamentPlayers/62b66f3a823df6535020cf38`
@@ -24,7 +25,7 @@ export function PlayersList() {
 
   useEffect(() => {
     getPlayers();
-  }, [tournament]);
+  }, []);
 
   return (
     <div>
