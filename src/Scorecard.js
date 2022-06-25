@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { TournamentContext } from "./App";
+import { Header } from "./Header";
+import { Loading } from "./Loading";
 
 const API_URL_BASE = "http://localhost:7777/api/"; // todo: make global
 
@@ -17,6 +19,12 @@ function Scorecard() {
   const isEmptyScore = (scoresArr) => {
     scoresArr.every((item) => item === 0);
   };
+
+  const getPrevHole = (currentHole) =>
+    currentHole - 1 < 1 ? 18 : currentHole - 1;
+
+  const getNextHole = (currentHole) =>
+    currentHole + 1 > 18 ? 1 : currentHole + 1;
 
   const handleSetNewScores = (newScore, i = null) => {
     // If we don't pass an index, we're updating both scores
@@ -90,73 +98,73 @@ function Scorecard() {
     }
   }, [newScores]);
 
-  if (!player.name) return null;
-
-  return (
-    <div>
-      <div className="hole-info">
-        <p className="hole-number">Hole {currentHole}</p>
-        <p className="hole-par">
-          Par {tournament?.holes[currentHole - 1]?.par}
-        </p>
-      </div>
-      <div className="nav-links">
-        <button
-          className="nav-btn"
-          onClick={() =>
-            setCurrentHole(currentHole - 1 < 1 ? 18 : currentHole - 1)
-          }
-        >
-          &lt;&lt; Prev Hole
-        </button>
-        <button
-          className="nav-btn"
-          onClick={() =>
-            setCurrentHole(currentHole + 1 > 18 ? 1 : currentHole + 1)
-          }
-        >
-          Next Hole &gt;&gt;
-        </button>
-      </div>
-      {newScores?.length && (
-        <div className="scorecard">
-          <div className="scorecard-player-details">
-            <div className="scorecard-team">
-              <p className="scorecard-team-name">
-                {player.name} ({player.handicap})
-              </p>
-              <p className="scorecard-team-score">
-                {player.parScore > 0 && <span>+</span>}
-                {player.parScore}
-              </p>
-            </div>
-            <div className="scorecard-players">
-              {player.players.map((teamPlayer, i) => (
-                <div className="scorecard-player" key={`player${i}`}>
-                  <p className="scorecard-player-name">{teamPlayer.name}</p>
-                  <div className="scorecard-input">
-                    <input
-                      type="text"
-                      maxLength={2}
-                      value={newScores[i]}
-                      onChange={(event) =>
-                        handleSetNewScores(event.target.value, i)
-                      }
-                    />
+  if (player?.name) {
+    return (
+      <div>
+        <Header />
+        <div className="scorecard-header">
+          <button
+            className="nav-btn"
+            onClick={() => setCurrentHole(getPrevHole(currentHole))}
+          >
+            &lt; Hole {getPrevHole(currentHole)}
+          </button>
+          <div className="hole-info">
+            <p className="hole-number">Hole {currentHole}</p>
+            <p className="hole-par">
+              Par {tournament?.holes[currentHole - 1]?.par} &#8226;{" "}
+              {tournament?.holes[currentHole - 1]?.yards} yards
+            </p>
+          </div>
+          <button
+            className="nav-btn"
+            onClick={() => setCurrentHole(getNextHole(currentHole))}
+          >
+            Hole {getNextHole(currentHole)} &gt;
+          </button>
+        </div>
+        {newScores?.length && (
+          <div className="scorecard">
+            <div className="scorecard-player-details">
+              <div className="scorecard-team">
+                <p className="scorecard-team-name">
+                  {player.name} ({player.handicap})
+                </p>
+                <p className="scorecard-team-score">
+                  {player.parScore > 0 && <span>+</span>}
+                  {player.parScore}
+                </p>
+              </div>
+              <div className="scorecard-players">
+                {player.players.map((teamPlayer, i) => (
+                  <div className="scorecard-player" key={`player${i}`}>
+                    <p className="scorecard-player-name">{teamPlayer.name}</p>
+                    <div className="scorecard-input">
+                      <input
+                        type="text"
+                        maxLength={2}
+                        value={newScores[i]}
+                        onChange={(event) =>
+                          handleSetNewScores(event.target.value, i)
+                        }
+                      />
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      )}
-      <hr />
-      <Link to="/">Back to home</Link>
-      <br />
-      <br />
-      <Link to="/leaderboard">View full leaderboard</Link>
-    </div>
-  );
+        )}
+        <hr />
+        <Link to="/">Back to home</Link>
+        <br />
+        <br />
+        <Link to="/leaderboard">View full leaderboard</Link>
+      </div>
+    );
+  } else {
+    return <Loading />;
+  }
 }
 
 export default Scorecard;

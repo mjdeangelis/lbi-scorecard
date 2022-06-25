@@ -56,7 +56,7 @@ hr {
 .container {
   width: 900px;
   max-width: 100%;
-  padding: 1rem;
+  padding: 2rem 1rem;
   height: 100vh;
   margin: 0 auto; }
 
@@ -193,22 +193,21 @@ hr {
     border-radius: 50%;
     background: #fff; }
 
-.hole-info {}
-.hole-number {
-  font-size: 2.5rem;
-  font-weight: 600;
-  margin: 1em 0 0.25em; }
-.hole-par {
-  font-size: 1.75rem;
-  margin: 0 0 0.5em; }
-
-.nav-links {
-  width: 100%;
-  padding: 0;
-  margin: 2rem 0;
+.scorecard-header {
   display: flex;
   justify-content: space-between;
-  align-items: center; }
+  align-items: flex-start;
+  background: rgba(121, 121, 121, 0.75);
+  padding: 0.5em 0;
+  margin: 3rem -1rem 0; }
+  .hole-info {}
+  .hole-number {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0; }
+  .hole-par {
+    font-size: 1rem;
+    margin: 0 0 0.5em; }
   .nav-btn {
     appearance: none;
     background: transparent;
@@ -216,11 +215,12 @@ hr {
     outline: none;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
-    font-size: 1.35rem;
+    font-size: 0.875rem;
     color: var(--white);
     text-decoration: none;
     text-transform: uppercase;
     font-weight: 700;
+    margin: 1rem 0;
     letter-spacing: 0.02em; }
 
 .scorecard {
@@ -259,14 +259,17 @@ hr {
       outline: none;
       z-index: 0;
       padding: 0; }
-  
+
+.leaderboard-container {
+  margin: 3rem auto 0; }
+
 table {
   display: grid;
   border-collapse: collapse;
   min-width: 100%;
   grid-template-columns: 
     minmax(10px, 1fr)
-    minmax(10px, 1fr)
+    minmax(10px, max-content)
     minmax(10px, 1fr)
     minmax(10px, 1fr)
     minmax(10px, 1fr)
@@ -280,19 +283,21 @@ tr {
 
 th,
 td {
-  padding: 15px;
+  padding: 5px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-align: center;
 }
 
 th {
   position: sticky;
   top: 0;
   background: var(--green-light);
-  text-align: left;
   font-weight: normal;
-  font-size: 1.1rem;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
   color: var(--black);
 }
 
@@ -304,6 +309,11 @@ td {
   padding-top: 10px;
   padding-bottom: 10px;
   background: var(--white);
+  color: var(--black);
+  font-size: 0.75rem;
+}
+
+td a {
   color: var(--black);
 }
 
@@ -318,4 +328,34 @@ tr:nth-child(even) td {
   to {
     transform: rotate(360deg);
   }
+}
+
+.loading {
+  display: inline-block;
+}
+.loading img {
+  animation: app-logo-spin infinite 1.5s linear;
+}
+.loading p {
+  display: inline-block;
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  border-right: .15em solid var(--green-rw); /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  margin: 5rem auto 0; /* Gives that scrolling effect as the typing happens */
+  letter-spacing: .15em; /* Adjust as needed */
+  animation: 
+    typing 2s steps(20, end) infinite,
+    blink-caret .75s step-end infinite;
+}
+
+/* Typing effect */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+/* Typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: var(--green-rw); }
 }
