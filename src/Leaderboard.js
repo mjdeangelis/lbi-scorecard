@@ -40,12 +40,12 @@ function Leaderboard() {
           </tr>
         </thead>
         <tbody>
-          {players.map((player) => (
+          {players.map((player, index) => (
             <tr>
-              <td>{player.position}</td>
+              <td>{index + 1}</td>
               <td>{player.name}</td>
-              <td>IDK</td>
-              <td>IDK</td>
+              <td>{player.handicap}</td>
+              <td>{player.totalScore}</td>
               <td>0</td>
             </tr>
           ))}

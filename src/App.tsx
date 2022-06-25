@@ -31,6 +31,7 @@ function App() {
   }, []);
   return (
     <div className="app">
+      <div className="background-overlay"></div>
       <div className="container">
         <header className="app-header">
           <div className="app-logo-container">

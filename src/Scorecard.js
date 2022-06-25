@@ -11,8 +11,26 @@ function Scorecard() {
   const { id } = useParams();
   const [player, setPlayer] = useState({});
   const [currentHole, setCurrentHole] = useState(null);
-  const [newScore, setNewScore] = useState(0);
+  const [newScores, setNewScores] = useState([0, 0]);
   const tournament = useContext(TournamentContext);
+
+  const isEmptyScore = (scoresArr) => {
+    scoresArr.every((item) => item === 0);
+  };
+
+  const handleSetNewScores = (newScore, i = null) => {
+    // If we don't pass an index, we're updating both scores
+    if (i === null) {
+      setNewScores(newScore);
+      return;
+    }
+    if (newScore !== "" && newScore !== null) {
+      newScore = Number(newScore);
+    }
+    console.log("newScore updated", newScore);
+    console.log("old scores.", newScores);
+    setNewScores(newScores.map((score, j) => (j === i ? newScore : score)));
+  };
 
   const getPlayerDetails = async (id) => {
     const res = await fetch(`${API_URL_BASE}/players/details/${id}`);
@@ -35,11 +53,11 @@ function Scorecard() {
     setPlayer(data);
   };
 
-  const updatePlayerScore = async (newScore, par) => {
+  const updatePlayerScore = async (newScores, par) => {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: player._id, currentHole, newScore, par }),
+      body: JSON.stringify({ id: player._id, currentHole, newScores, par }),
     };
     const response = await fetch(
       `${API_URL_BASE}/players/updateScore`,
@@ -54,17 +72,23 @@ function Scorecard() {
   }, [id]);
 
   useEffect(() => {
+    console.log("currentHole updated.", currentHole);
     if (currentHole) {
-      setNewScore(player?.scorecard[currentHole - 1]?.score);
+      handleSetNewScores(player?.scorecard[currentHole - 1]?.scores);
       updateCurrentHole(currentHole);
     }
   }, [currentHole]);
 
   useEffect(() => {
-    if (newScore !== "" && newScore > 0) {
-      updatePlayerScore(newScore, tournament?.holes[currentHole - 1].par);
+    console.log("newScores changed", newScores);
+    const isEmptyScore = newScores.every((item) => item === 0);
+    if (!isEmptyScore) {
+      console.log("Updated score.");
+      updatePlayerScore(newScores, tournament?.holes[currentHole - 1].par);
+    } else {
+      console.log("Empty score.");
     }
-  }, [newScore]);
+  }, [newScores]);
 
   if (!player.name) return null;
 
@@ -94,26 +118,38 @@ function Scorecard() {
           Next Hole &gt;&gt;
         </button>
       </div>
-      <div className="scorecard">
-        <div className="scorecard-player-details">
-          <p className="scorecard-name">{player.name}</p>
-          <div className="scorecard-score">
-            <p className="scorecard-handicap">{player.handicap}</p>
-            <p className="scorecard-current-score">
-              ({player.parScore > 0 && <span>+</span>}
-              {player.parScore})
-            </p>
+      {newScores?.length && (
+        <div className="scorecard">
+          <div className="scorecard-player-details">
+            <div className="scorecard-team">
+              <p className="scorecard-team-name">
+                {player.name} ({player.handicap})
+              </p>
+              <p className="scorecard-team-score">
+                {player.parScore > 0 && <span>+</span>}
+                {player.parScore}
+              </p>
+            </div>
+            <div className="scorecard-players">
+              {player.players.map((teamPlayer, i) => (
+                <div className="scorecard-player" key={`player${i}`}>
+                  <p className="scorecard-player-name">{teamPlayer.name}</p>
+                  <div className="scorecard-input">
+                    <input
+                      type="text"
+                      maxLength={2}
+                      value={newScores[i]}
+                      onChange={(event) =>
+                        handleSetNewScores(event.target.value, i)
+                      }
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-        <div className="scorecard-input">
-          <input
-            type="text"
-            maxLength={2}
-            value={newScore}
-            onChange={(event) => setNewScore(event.target.value)}
-          />
-        </div>
-      </div>
+      )}
       <hr />
       <Link to="/">Back to home</Link>
       <br />
