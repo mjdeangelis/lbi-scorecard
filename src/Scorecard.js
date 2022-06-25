@@ -4,6 +4,8 @@ import { TournamentContext } from "./App";
 import { Header } from "./Header";
 import { Loading } from "./Loading";
 
+import EnsureAnimation from "ensure-animation";
+
 /* todo
  * Figure out how to store hole/course data globally (figuring out par on each hole)
  */
@@ -13,6 +15,7 @@ function Scorecard() {
   const [currentHole, setCurrentHole] = useState(null);
   const [newScores, setNewScores] = useState([0, 0]);
   const tournament = useContext(TournamentContext);
+  let preloader;
 
   const getPrevHole = (currentHole) =>
     currentHole - 1 < 1 ? 18 : currentHole - 1;
@@ -70,8 +73,12 @@ function Scorecard() {
       `${process.env.REACT_APP_API_URL}/players/details/${id}`
     );
     const newPlayer = await res.json();
-    setPlayer(newPlayer);
-    setCurrentHole(newPlayer.currentHole);
+    preloader.finish().then(() => {
+      setPlayer(newPlayer);
+      setCurrentHole(newPlayer.currentHole);
+    });
+    // setPlayer(newPlayer);
+    // setCurrentHole(newPlayer.currentHole);
   };
 
   const updateCurrentHole = async (newHole) => {
@@ -104,6 +111,7 @@ function Scorecard() {
   };
 
   useEffect(() => {
+    preloader = new EnsureAnimation(".app-logo")[0]; // get our first instance
     getPlayerDetails(id);
   }, [id]);
 

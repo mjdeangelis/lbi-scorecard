@@ -3,8 +3,12 @@ import { Link } from "react-router-dom";
 import { Header } from "./Header";
 import { Loading } from "./Loading";
 
+import EnsureAnimation from "ensure-animation";
+
 function Leaderboard() {
   const [players, setPlayers] = useState([]);
+  const [initialLoad, setInitialLoad] = useState(false);
+  let preloader;
 
   const createLeaderboard = (players) => {
     // players = new Array(players);
@@ -20,7 +24,17 @@ function Leaderboard() {
         `${process.env.REACT_APP_API_URL}players/getTournamentPlayers/62b66f3a823df6535020cf38`
       );
       const players = await res.json();
+      // if (!initialLoad) {
+      // console.log("Initial load of players");
+      // preloader.finish().then(() => {
       setPlayers(createLeaderboard(players));
+      setInitialLoad(true);
+      // });
+      // } else {
+      // console.log("Just updating leaaderboard");
+      // setPlayers(createLeaderboard(players));
+      // }
+
       console.log("players", players);
     } catch (e) {
       console.error(e);
@@ -32,6 +46,7 @@ function Leaderboard() {
   // }, []);
 
   useEffect(() => {
+    preloader = new EnsureAnimation(".app-logo")[0]; // get our first instance
     getPlayers();
     const interval = setInterval(() => getPlayers(), 20000);
     return () => {

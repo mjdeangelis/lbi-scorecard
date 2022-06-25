@@ -4,28 +4,9 @@ import { Link } from "react-router-dom";
 import { TournamentContext } from "./App";
 import icon from "./golf-icon.png";
 
-export function PlayersList() {
-  const [players, setPlayers] = useState([]);
+export function PlayersList({ players }) {
   const [currentPlayer, setCurrentPlayer] = useState({});
   const tournament = useContext(TournamentContext);
-
-  const getPlayers = async () => {
-    console.log("getPlayers()");
-    try {
-      const res = await fetch(
-        `${process.env.REACT_APP_API_URL}players/getTournamentPlayers/62b66f3a823df6535020cf38`
-      );
-      const players = await res.json();
-      setPlayers(players);
-      console.log("players", players);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  useEffect(() => {
-    getPlayers();
-  }, []);
 
   return (
     <div>
