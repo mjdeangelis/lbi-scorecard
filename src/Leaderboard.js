@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Header } from "./Header";
+import { Loading } from "./Loading";
 
 function Leaderboard() {
   const [players, setPlayers] = useState([]);
 
   const createLeaderboard = (players) => {
-    return players.sort((a, b) => b.score - a.score);
+    // players = new Array(players);
+    const idlePlayers = players.filter((player) => player.thru === 0);
+    const playersWhoStarted = players.filter((player) => player.thru > 0);
+    const sortedPlayers = playersWhoStarted.sort((a, b) => b.score - a.score);
+    return [...sortedPlayers, ...idlePlayers];
   };
 
   const getPlayers = async () => {
@@ -25,41 +31,48 @@ function Leaderboard() {
     getPlayers();
   }, []);
 
-  return (
-    <div className="leaderboard-container">
-      <h1>Live leaderboard</h1>
-      <p>
-        <em>Scores updated every 20 seconds</em>
-      </p>
-      <table>
-        <thead>
-          <tr>
-            <th>Pos</th>
-            <th>Team</th>
-            <th>+/-</th>
-            <th>Net</th>
-            <th>Thru</th>
-          </tr>
-        </thead>
-        <tbody>
-          {players.map((player, index) => (
-            <tr>
-              <td>{index + 1}</td>
-              <td>
-                <Link to={`/scorecard/${player?._id}`}>{player.name}</Link>
-              </td>
-              <td>
-                {player.parScore > 0 && <span>+</span>}
-                {player.parScore}
-              </td>
-              <td>{player.netScore}</td>
-              <td>{player.thru}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+  if (players?.length) {
+    return (
+      <div>
+        <Header />
+        <div className="leaderboard-container">
+          <h1>Live leaderboard</h1>
+          <p>
+            <em>Scores updated every 20 seconds</em>
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Pos</th>
+                <th>Team</th>
+                <th>+/-</th>
+                <th>Net</th>
+                <th>Thru</th>
+              </tr>
+            </thead>
+            <tbody>
+              {players.map((player, index) => (
+                <tr key={player._id}>
+                  <td>{index + 1}</td>
+                  <td>
+                    <Link to={`/scorecard/${player?._id}`}>{player.name}</Link>
+                  </td>
+                  <td>
+                    {player.parScore > 0 && <span>+</span>}
+                    {player.parScore}
+                  </td>
+                  <td>{player.netScore}</td>
+                  <td>{player.thru}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  } else {
+    return <Loading />;
+  }
 }
 
 export default Leaderboard;

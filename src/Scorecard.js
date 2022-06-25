@@ -123,7 +123,7 @@ function Scorecard() {
     }
   }, [newScores]);
 
-  if (tournament.name && player?.name) {
+  if (tournament?.name && player?.name) {
     return (
       <div>
         <Header />
