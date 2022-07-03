@@ -146,9 +146,7 @@ function Scorecard() {
         <div className="scorecard-header">
           <button
             className="nav-btn"
-            onClick={() =>
-              validateScores(setCurrentHole, getPrevHole(currentHole))
-            }
+            onClick={() => setCurrentHole(getPrevHole(currentHole))}
           >
             &lt; Hole {getPrevHole(currentHole)}
           </button>
