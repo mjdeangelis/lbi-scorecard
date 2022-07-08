@@ -1,55 +1,73 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { TournamentContext } from "./App";
-import { Header } from "./Header";
-import { Loading } from "./Loading";
-import { PlayersList } from "./PlayersList";
-import logo from "./logo.png";
+import React, { useContext, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useSpring, useTransition, animated } from 'react-spring';
 
-import EnsureAnimation from "ensure-animation";
+import { TournamentContext } from './App';
+import { Header } from './Header';
+// import { Loading } from './Loading';
+import { PlayersList } from './PlayersList';
+import logo from './logo.png';
 
 export function Home() {
   const tournament = useContext(TournamentContext);
   const [players, setPlayers] = useState([]);
+  const [arePlayersLoaded, setArePlayersLoaded] = useState(false);
+  const [logoShouldStop, setLogoShouldStop] = useState(false);
   let preloader;
 
   const getPlayers = async () => {
-    console.log("getPlayers()");
+    console.log('getPlayers()');
     try {
       const res = await fetch(
         `${process.env.REACT_APP_API_URL}players/getTournamentPlayers/62b66f3a823df6535020cf38`
       );
       const players = await res.json();
-      preloader.finish().then(() => {
-        console.log("preloader finished");
-        setPlayers(players);
-        console.log("players", players);
-      });
+      setPlayers(players);
+      setArePlayersLoaded(true);
     } catch (e) {
       console.error(e);
     }
   };
 
   useEffect(() => {
-    preloader = new EnsureAnimation(".app-logo")[0]; // get our first instance
     getPlayers();
   }, []);
 
-  if (tournament?.name && players?.length) {
-    return (
-      <div>
+  const logoStyles = useSpring({
+    loop: true,
+    from: { rotateZ: 0 },
+    to: { rotateZ: 360 },
+    cancel: logoShouldStop,
+    onRest: () => setLogoShouldStop(arePlayersLoaded),
+  });
+
+  const transitions = useTransition(arePlayersLoaded, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    delay: 200,
+  });
+
+  return (
+    <div>
+      <animated.div style={logoStyles}>
         <Header />
-        <h1>{tournament.name}</h1>
-        <PlayersList players={players} />
-        <hr />
-        <h2>Spectators only.</h2>
-        <p>Click below to view the outing leaderboard</p>
-        <Link className="btn" to="/leaderboard">
-          View the leaderboard
-        </Link>
-      </div>
-    );
-  } else {
-    return <Loading />;
-  }
+      </animated.div>
+      {transitions(
+        (styles, item) =>
+          item && (
+            <animated.div style={styles}>
+              <h1>{tournament.name}</h1>
+              <PlayersList style={styles} players={players} />
+              <hr />
+              <h2>Spectators only.</h2>
+              <p>Click below to view the outing leaderboard</p>
+              <Link className="btn" to="/leaderboard">
+                View the leaderboard
+              </Link>
+            </animated.div>
+          )
+      )}
+    </div>
+  );
 }
