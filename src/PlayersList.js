@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 
-import { TournamentContext } from "./App";
-import icon from "./golf-icon.png";
+import { TournamentContext } from './App';
+import icon from './golf-icon.png';
 
 export function PlayersList({ players }) {
   const [currentPlayer, setCurrentPlayer] = useState({});
@@ -14,13 +14,23 @@ export function PlayersList({ players }) {
         Select the golfer you are keeping score for,
         <br /> and tap the Tee Off button
       </p>
-      <Link className="btn btn-teeoff" to={`/scorecard/${currentPlayer?._id}`}>
+      <Link className="btn btn-teeoff" to={`/scorecard/${currentPlayer}`}>
         <img src={icon} className="btn-icon" alt="Golf icon" />
         Tee Off
       </Link>
       <div className="golfers">
         <h2>Golfers</h2>
-        <ul className="unstyled-list player-list">
+        <div className="player-list">
+          <select onChange={(e) => setCurrentPlayer(e.target.value)}>
+            {players.length > 0 &&
+              players.map((player) => (
+                <option key={player._id} value={player._id}>
+                  {player.name}
+                </option>
+              ))}
+          </select>
+        </div>
+        {/* <ul className="unstyled-list player-list">
           {players?.map((player) => (
             <li key={player._id}>
               <label className="radio-container">
@@ -36,7 +46,7 @@ export function PlayersList({ players }) {
               </label>
             </li>
           ))}
-        </ul>
+        </ul> */}
       </div>
     </div>
   );
