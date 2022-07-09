@@ -21,14 +21,19 @@ export function PlayersList({ players }) {
       <div className="golfers">
         <h2>Golfers</h2>
         <div className="player-list">
-          <select onChange={(e) => setCurrentPlayer(e.target.value)}>
-            {players.length > 0 &&
-              players.map((player) => (
-                <option key={player._id} value={player._id}>
-                  {player.name}
-                </option>
-              ))}
-          </select>
+          <div class="select-container">
+            <select onChange={(e) => setCurrentPlayer(e.target.value)}>
+              <option value="" disabled selected>
+                Select a player
+              </option>
+              {players.length > 0 &&
+                players.map((player) => (
+                  <option key={player._id} value={player._id}>
+                    {player.name}
+                  </option>
+                ))}
+            </select>
+          </div>
         </div>
         {/* <ul className="unstyled-list player-list">
           {players?.map((player) => (

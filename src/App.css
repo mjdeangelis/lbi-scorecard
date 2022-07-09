@@ -331,6 +331,31 @@ tr:nth-child(even) td {
   }
 }
 
+select {
+  appearance: none;
+  border: none;
+  outline: none;
+  padding: 0.5em;
+  border-radius: 0.25em;
+}
+
+.select-container {
+  display: inline-block;
+  position: relative; }
+  .select-container:after {
+    content: '';
+    background: url('./angle-small-down.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    width: 30px;
+    height: 30px;
+    display: inline-block; }
+
+
 .loading {
   display: inline-block;
 }
