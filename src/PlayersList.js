@@ -21,9 +21,12 @@ export function PlayersList({ players }) {
       <div className="golfers">
         <h2>Golfers</h2>
         <div className="player-list">
-          <div class="select-container">
-            <select onChange={(e) => setCurrentPlayer(e.target.value)}>
-              <option value="" disabled selected>
+          <div className="select-container">
+            <select
+              onChange={(e) => setCurrentPlayer(e.target.value)}
+              defaultValue=""
+            >
+              <option value="" disabled>
                 Select a player
               </option>
               {players.length > 0 &&

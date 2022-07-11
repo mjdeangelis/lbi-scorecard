@@ -42,9 +42,9 @@ export function Home() {
   });
 
   const transitions = useTransition(arePlayersLoaded, {
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
+    from: { opacity: 0, transform: 'translate(100%, 0)' },
+    enter: { opacity: 1, transform: 'translate(0, 0)' },
+    leave: { opacity: 0, transform: 'translate(100%, 0)' },
     delay: 200,
   });
 
@@ -56,7 +56,7 @@ export function Home() {
       {transitions(
         (styles, item) =>
           item && (
-            <animated.div style={styles}>
+            <div style={styles}>
               <h1>{tournament.name}</h1>
               <PlayersList style={styles} players={players} />
               <hr />
@@ -65,7 +65,7 @@ export function Home() {
               <Link className="btn" to="/leaderboard">
                 View the leaderboard
               </Link>
-            </animated.div>
+            </div>
           )
       )}
     </div>

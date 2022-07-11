@@ -13,18 +13,11 @@
   --green-light: #b6dba6; }
 
 body {
-  /* background: var(--blue-rw); */
-  /* background: rgb(84,106,162); */
-  /* background: linear-gradient(176deg, rgba(84,106,162,1) 0%, rgba(84,106,162,1) 30%, rgba(0,0,0,1) 100%); */
-  background-image: url('./background2.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
   color: var(--white);
   font-family: 'Merriweather', serif;
   font-weight: 300;
-  /* font-family: 'Oswald', serif; */
+  /* height: 100vh; */
+  /* width: 100%; */
 }
 
 h1,
@@ -52,24 +45,55 @@ hr {
 .app {
   text-align: center;
   position: relative;
+  overflow: scroll;
 }
 
 .container {
   width: 900px;
+  position: relative;
   max-width: 100%;
-  padding: 2rem 1rem;
+  padding: 2rem 1rem 0;
   min-height: 100vh;
   margin: 0 auto; }
+  /* .container > div {
+    width: 100%;
+    height: 100vh; } */
+  .container .transitionRouteContainer {
+    position: absolute;
+    padding: 2rem 1rem;
+    width: 100%;
+    margin: 0 auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; }
 
-.background-overlay {
-  position: absolute;
+.background-image {
+  background-image: url('./background2.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100vh;
+  background-attachment: fixed;
+  position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
   top: 0;
   margin: 0 auto;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  z-index: -2;
+}
+
+.background-overlay {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  margin: 0 auto;
+  width: 100%;
+  height: 100vh;
   background: rgba(84,106,162, 0.94);
   /* background: linear-gradient(176deg, rgba(84,106,162,0.9) 0%, rgba(84,106,162,0.9) 30%, rgba(0,0,0,0.9) 100%); */
   z-index: -1;

@@ -1,18 +1,18 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect, createContext } from 'react';
 import {
   BrowserRouter as Router,
   // Routes,
   // Route,
   // useLocation,
-} from "react-router-dom";
+} from 'react-router-dom';
 
-import "./App.css";
-import logo from "./logo.png";
+import './App.css';
+import logo from './logo.png';
 
 // import { Home } from "./Home";
 // import Leaderboard from "./Leaderboard";
 // import Scorecard from "./Scorecard";
-import Main from "./Main";
+import Main from './Main';
 
 export const TournamentContext = createContext({});
 export const LoadingContext = createContext(false);
@@ -38,7 +38,6 @@ function App() {
 
   return (
     <div className="app">
-      <div className="background-overlay"></div>
       <div className="container">
         <TournamentContext.Provider value={tournament}>
           <Router>

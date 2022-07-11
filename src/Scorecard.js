@@ -152,98 +152,100 @@ function Scorecard() {
   });
 
   const transitions = useTransition(isDoneLoading, {
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
+    from: { opacity: 1, transform: 'translate(100%, 0)' },
+    enter: { opacity: 1, transform: 'translate(0, 0)' },
+    leave: { opacity: 1, transform: 'translate(-100%, 0)' },
     delay: 200,
   });
 
-  // if (tournament?.name && player?.name) {
-  return (
-    <div>
-      <animated.div style={logoStyles}>
-        <Header />
-      </animated.div>
-      {transitions(
-        (styles, item) =>
-          item && (
-            <div>
-              <div className="scorecard-header">
-                <button
-                  className="nav-btn"
-                  onClick={() => setCurrentHole(getPrevHole(currentHole))}
-                >
-                  &lt; Hole {getPrevHole(currentHole)}
-                </button>
-                <div className="hole-info">
-                  <p className="hole-number">Hole {currentHole}</p>
-                  <p className="hole-par">
-                    Par {tournament?.holes[currentHole - 1]?.par} &#8226;{' '}
-                    {tournament?.holes[currentHole - 1]?.yards} yards
-                  </p>
+  if (tournament?.name && player?.name) {
+    return (
+      <div>
+        <animated.div style={logoStyles}>
+          <Header />
+        </animated.div>
+        {transitions(
+          (styles, item) =>
+            item && (
+              <div style={styles}>
+                <div className="scorecard-header">
+                  <button
+                    className="nav-btn"
+                    onClick={() => setCurrentHole(getPrevHole(currentHole))}
+                  >
+                    &lt; Hole {getPrevHole(currentHole)}
+                  </button>
+                  <div className="hole-info">
+                    <p className="hole-number">Hole {currentHole}</p>
+                    <p className="hole-par">
+                      Par {tournament?.holes[currentHole - 1]?.par} &#8226;{' '}
+                      {tournament?.holes[currentHole - 1]?.yards} yards
+                    </p>
+                  </div>
+                  <button
+                    className="nav-btn"
+                    // onClick={() => setCurrentHole(getNextHole(currentHole))}
+                    onClick={() =>
+                      validateScores(setCurrentHole, getNextHole(currentHole))
+                    }
+                  >
+                    Hole {getNextHole(currentHole)} &gt;
+                  </button>
                 </div>
-                <button
-                  className="nav-btn"
-                  // onClick={() => setCurrentHole(getNextHole(currentHole))}
-                  onClick={() =>
-                    validateScores(setCurrentHole, getNextHole(currentHole))
-                  }
-                >
-                  Hole {getNextHole(currentHole)} &gt;
-                </button>
-              </div>
-              {newScores?.length && (
-                <div className="scorecard">
-                  <div className="scorecard-player-details">
-                    <div className="scorecard-team">
-                      <p className="scorecard-team-name">
-                        {player.name} ({player.handicap})
-                      </p>
-                      <p className="scorecard-team-score">
-                        {player.parScore > 0 && <span>+</span>}
-                        {player.parScore}
-                      </p>
-                    </div>
-                    <div className="scorecard-players">
-                      {player.players.map((teamPlayer, i) => (
-                        <div className="scorecard-player" key={`player${i}`}>
-                          <p className="scorecard-player-name">
-                            {teamPlayer.name}
-                          </p>
-                          <div className="scorecard-input">
-                            <input
-                              type="text"
-                              maxLength={2}
-                              inputMode="numeric"
-                              onFocus={(event) =>
-                                handleScoreOnFocus(event.target.value, i)
-                              }
-                              onBlur={(event) =>
-                                handleScoreOnBlur(event.target.value, i)
-                              }
-                              value={newScores[i]}
-                              onChange={(event) =>
-                                handleSetNewScores(event.target.value, i)
-                              }
-                            />
+                {newScores?.length && (
+                  <div className="scorecard">
+                    <div className="scorecard-player-details">
+                      <div className="scorecard-team">
+                        <p className="scorecard-team-name">
+                          {player.name} ({player.handicap})
+                        </p>
+                        <p className="scorecard-team-score">
+                          {player.parScore > 0 && <span>+</span>}
+                          {player.parScore}
+                        </p>
+                      </div>
+                      <div className="scorecard-players">
+                        {player.players.map((teamPlayer, i) => (
+                          <div className="scorecard-player" key={`player${i}`}>
+                            <p className="scorecard-player-name">
+                              {teamPlayer.name}
+                            </p>
+                            <div className="scorecard-input">
+                              <input
+                                type="text"
+                                maxLength={2}
+                                inputMode="numeric"
+                                onFocus={(event) =>
+                                  handleScoreOnFocus(event.target.value, i)
+                                }
+                                onBlur={(event) =>
+                                  handleScoreOnBlur(event.target.value, i)
+                                }
+                                value={newScores[i]}
+                                onChange={(event) =>
+                                  handleSetNewScores(event.target.value, i)
+                                }
+                              />
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-              <hr />
-              <Link to="/">Back to home</Link>
-              <br />
-              <br />
-              <Link to="/leaderboard">View full leaderboard</Link>
-            </div>
-          )
-      )}
-    </div>
-  );
-  // }
+                )}
+                <hr />
+                <Link to="/">Back to home</Link>
+                <br />
+                <br />
+                <Link to="/leaderboard">View full leaderboard</Link>
+              </div>
+            )
+        )}
+      </div>
+    );
+  } else {
+    return null;
+  }
 }
 
 export default Scorecard;
