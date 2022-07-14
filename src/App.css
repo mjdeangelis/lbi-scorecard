@@ -159,6 +159,8 @@ hr {
     color: var(--white); }
   .btn-link {
     appearance: none;
+    -webkit-appearance: none; 
+    -moz-appearance: none;
     background: transparent;
     border: none;
     text-decoration: underline;
@@ -252,6 +254,8 @@ hr {
     margin: 0 0 0.5em; }
   .nav-btn {
     appearance: none;
+    -webkit-appearance: none; 
+    -moz-appearance: none;
     background: transparent;
     border: none;
     outline: none;
@@ -375,10 +379,14 @@ tr:nth-child(even) td {
 
 select {
   appearance: none;
+  -webkit-appearance: none; 
+  -moz-appearance: none;
   border: none;
   padding: 0.5em;
   border-radius: 0.25em;
-}
+  color: var(--black); }
+  option:not(:first-of-type) {
+    color: black; }
 
 .select-container {
   display: inline-block;
