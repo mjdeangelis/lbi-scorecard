@@ -173,7 +173,8 @@ function Scorecard() {
           </button>
           <div className="hole-info">
             <p className="hole-number">
-              Hole {currentHole} ({tournament?.holes[currentHole - 1]?.alias})
+              Hole {currentHole} <br />(
+              {tournament?.holes[currentHole - 1]?.alias})
             </p>
             <p className="hole-par">
               Par {tournament?.holes[currentHole - 1]?.par} &#8226;{' '}
