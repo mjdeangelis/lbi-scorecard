@@ -44,7 +44,7 @@ hr {
 .app {
   text-align: center;
   position: relative;
-  overflow: scroll;
+  overflow: hidden;
 }
 
 .container {
@@ -65,7 +65,9 @@ hr {
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0; }
+    bottom: 0;
+    overflow-y: scroll;
+    overflow-x: hidden; }
 
 .background-image {
   background-image: url('./leroy-background-min.jpg');
