@@ -10,13 +10,43 @@ function Leaderboard() {
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
 
   const createLeaderboard = (players) => {
+    console.log('players');
     const idlePlayers = players.filter((player) => player.thru === 0);
     const playersWhoStarted = players.filter((player) => player.thru > 0);
-    const sortedPlayers = playersWhoStarted.sort(
+    const sortedPlayers = [...playersWhoStarted].sort(
       (a, b) => a.netScore - b.netScore
     );
-    const sortedIdlePlayers = idlePlayers.sort(
+    const sortedIdlePlayers = [...idlePlayers].sort(
       (a, b) => a.netScore - b.netScore
+    );
+    /* Account for possible ties */
+    console.log('sortedPlayers 1', sortedPlayers);
+    sortedPlayers.reduce(
+      (padded, player, i) => {
+        const score = player.netScore;
+        const prevScore = padded[i].netScore;
+        const nextScore = padded[i + 2].netScore;
+
+        player.isTied = score === prevScore || score === nextScore;
+        player.place = score === prevScore ? padded[i].place : i + 1;
+        console.log('padded', padded);
+        return padded;
+      },
+      [{ netScore: null }, ...sortedPlayers, { netScore: null }]
+    );
+    /* Sort idle players - note that we added sortedPlayers.length to place to account for already ranked players */
+    sortedIdlePlayers.reduce(
+      (padded, player, i) => {
+        const score = player.netScore;
+        const prevScore = padded[i].netScore;
+        const nextScore = padded[i + 2].netScore;
+
+        player.isTied = score === prevScore || score === nextScore;
+        player.place =
+          score === prevScore ? padded[i].place : sortedPlayers.length + i + 1;
+        return padded;
+      },
+      [{ netScore: null }, ...sortedIdlePlayers, { netScore: null }]
     );
     return [...sortedPlayers, ...sortedIdlePlayers];
   };
@@ -102,7 +132,10 @@ function Leaderboard() {
             <tbody>
               {players.map((player, index) => (
                 <tr key={player._id}>
-                  <td>{index + 1}</td>
+                  <td>
+                    {player.isTied && <span>T</span>}
+                    {player.place}
+                  </td>
                   <td>
                     <button
                       className="btn-link"
