@@ -78,6 +78,15 @@ function Leaderboard() {
             </tbody>
           </table>
         </div>
+        <Link
+          style={{
+            marginTop: '15px',
+            display: 'inline-block',
+          }}
+          to="/"
+        >
+          Back to home
+        </Link>
       </div>
     );
   } else {
