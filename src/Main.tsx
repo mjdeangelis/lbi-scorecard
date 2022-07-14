@@ -8,7 +8,7 @@ import {
 import { useTransition, animated } from 'react-spring';
 
 import './App.css';
-import logo from './logo.png';
+import logo from './logo-min.png';
 
 import { Home } from './Home';
 import Leaderboard from './Leaderboard';

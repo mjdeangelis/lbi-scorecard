@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import logo from "./logo.png";
+import React, { useState, useEffect } from 'react';
+import logo from './logo-min.png';
 
 export function Header() {
   return (

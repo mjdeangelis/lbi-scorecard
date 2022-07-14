@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import { TournamentContext } from './App';
-import icon from './golf-icon.png';
+import icon from './golf-icon-min.png';
 
 export function PlayersList({ players }) {
   const [currentPlayer, setCurrentPlayer] = useState({});

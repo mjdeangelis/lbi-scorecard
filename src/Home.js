@@ -6,7 +6,7 @@ import { TournamentContext } from './App';
 import { Header } from './Header';
 // import { Loading } from './Loading';
 import { PlayersList } from './PlayersList';
-import logo from './logo.png';
+import logo from './logo-min.png';
 
 export function Home() {
   const tournament = useContext(TournamentContext);

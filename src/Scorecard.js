@@ -225,10 +225,6 @@ function Scorecard() {
         <animated.div style={logoStyles}>
           <Header />
         </animated.div>
-        {/* {transitions(
-          (styles, item) =>
-            item && (
-              <div style={styles}> */}
         <div className="scorecard-header">
           <button
             className="nav-btn"
@@ -298,9 +294,6 @@ function Scorecard() {
         <br />
         <Link to="/leaderboard">View full leaderboard</Link>
       </div>
-      //       )
-      //   )}
-      // </div>
     );
   } else {
     return null;

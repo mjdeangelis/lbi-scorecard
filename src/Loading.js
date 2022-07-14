@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import logo from "./logo.png";
+import React, { useState, useEffect } from 'react';
+import logo from './logo-min.png';
 
 export function Loading() {
   return (
@@ -7,7 +7,7 @@ export function Loading() {
       <div className="app-logo-container">
         <img
           src={logo}
-          onAnimationEnd={() => console.log("Animation ended")}
+          onAnimationEnd={() => console.log('Animation ended')}
           className="app-logo"
           alt="Leroy Brown Invitational Logo"
         />
