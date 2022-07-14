@@ -1,26 +1,20 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useContext } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { TournamentContext } from './App';
 import { Header } from './Header';
-import { Loading } from './Loading';
 import { useSpring, useTransition, animated } from 'react-spring';
-
-// import EnsureAnimation from 'ensure-animation';
 
 /* todo
  * Figure out how to store hole/course data globally (figuring out par on each hole)
  */
 function Scorecard() {
-  let navigate = useNavigate();
   const { id } = useParams();
   const [player, setPlayer] = useState({});
   const [currentHole, setCurrentHole] = useState(null);
   const [newScores, setNewScores] = useState([0, 0]);
   const [isDoneLoading, setIsDoneLoading] = useState(false);
   const [logoShouldStop, setLogoShouldStop] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const tournament = useContext(TournamentContext);
-  let preloader;
 
   const getPrevHole = (currentHole) =>
     currentHole - 1 < 1 ? 18 : currentHole - 1;
@@ -80,24 +74,6 @@ function Scorecard() {
     setNewScores(newScores.map((score, j) => (j === i ? newScore : score)));
   };
 
-  const showPasswordPrompt = (player, addMessage) => {
-    let password = prompt(
-      `${
-        addMessage ? 'Password cannot be blank.' : ''
-      } Please enter your team password.`,
-      ''
-    );
-    console.log('password', password);
-    if (password == null || password == '') {
-      return false;
-      // todo: make this player.password
-    } else if (password.toLowerCase() == player.handicap) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
   const getPlayerDetails = async (id) => {
     console.log('getPlayerDetails()');
     const res = await fetch(
@@ -107,26 +83,8 @@ function Scorecard() {
 
     setPlayer(newPlayer);
     setCurrentHole(newPlayer.currentHole);
-    console.log('isAuthenticated', isAuthenticated);
-
-    const passwordHasBeenEntered = window.localStorage.getItem(newPlayer._id);
-
-    if (passwordHasBeenEntered === 'true') {
-      setIsAuthenticated(true);
-    } else if (!isAuthenticated) {
-      const result = showPasswordPrompt(newPlayer, false);
-      window.localStorage.setItem(newPlayer._id, result);
-      setIsAuthenticated(result);
-    }
+    setIsDoneLoading(true);
   };
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      setIsDoneLoading(true);
-    } else {
-      return;
-    }
-  }, [isAuthenticated]);
 
   const updateCurrentHole = async (newHole) => {
     const requestOptions = {
@@ -158,7 +116,6 @@ function Scorecard() {
   };
 
   useEffect(() => {
-    // preloader = new EnsureAnimation('.app-logo')[0]; // get our first instance
     getPlayerDetails(id);
   }, [id]);
 
@@ -201,25 +158,7 @@ function Scorecard() {
     delay: 200,
   });
 
-  if (!isAuthenticated) {
-    return (
-      <div>
-        <Header />
-        <div>
-          <p>Incorrect password. Try again or return to the homepage.</p>
-          <button
-            className="btn btn--block"
-            onClick={() => getPlayerDetails(id)}
-          >
-            Try again
-          </button>
-          <Link className="btn btn--block btn--secondary" to="/">
-            Return to homepage.
-          </Link>
-        </div>
-      </div>
-    );
-  } else if (tournament?.name && player?.name) {
+  if (tournament?.name && player?.name) {
     return (
       <div>
         <animated.div style={logoStyles}>
@@ -285,6 +224,11 @@ function Scorecard() {
                   </div>
                 ))}
               </div>
+              <p>
+                <em>
+                  <strong>Remember to fill out your physical scorecard!</strong>
+                </em>
+              </p>
             </div>
           </div>
         )}

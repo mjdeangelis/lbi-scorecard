@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Header } from './Header';
-import { Loading } from './Loading';
+import { PasswordPrompt } from './PasswordPrompt';
 
 function Leaderboard() {
+  let navigate = useNavigate();
   const [players, setPlayers] = useState([]);
+  const [currentPlayer, setCurrentPlayer] = useState({});
+  const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
 
   const createLeaderboard = (players) => {
-    // players = new Array(players);
     const idlePlayers = players.filter((player) => player.thru === 0);
     const playersWhoStarted = players.filter((player) => player.thru > 0);
     const sortedPlayers = playersWhoStarted.sort(
@@ -29,9 +31,37 @@ function Leaderboard() {
     }
   };
 
-  // useEffect(() => {
-  //   getPlayers();
-  // }, []);
+  const navigateToPlayer = (id) => {
+    navigate(`/scorecard/${id}`);
+  };
+
+  const handlePasswordPromptChange = (player, result) => {
+    setShowPasswordPrompt(false);
+    window.localStorage.setItem(player._id, result);
+    if (result) {
+      navigateToPlayer(player._id);
+    } else if (result === null) {
+      setCurrentPlayer({});
+    } else {
+      setCurrentPlayer({});
+      alert('Incorrect password. Try again.');
+    }
+  };
+
+  useEffect(() => {
+    if (currentPlayer._id) {
+      // decide if we need to show prompt here
+      const passwordHasBeenEntered = window.localStorage.getItem(
+        currentPlayer._id
+      );
+      console.log('Password has been entered?', passwordHasBeenEntered);
+      if (passwordHasBeenEntered == 'true') {
+        navigateToPlayer(currentPlayer._id);
+      } else {
+        setShowPasswordPrompt(true);
+      }
+    }
+  }, [currentPlayer]);
 
   useEffect(() => {
     getPlayers();
@@ -44,6 +74,12 @@ function Leaderboard() {
   if (players?.length) {
     return (
       <div>
+        {showPasswordPrompt && (
+          <PasswordPrompt
+            player={currentPlayer}
+            handleChange={handlePasswordPromptChange}
+          />
+        )}
         <Header />
         <div className="leaderboard-container">
           <h1>Live leaderboard</h1>
@@ -65,7 +101,9 @@ function Leaderboard() {
                 <tr key={player._id}>
                   <td>{index + 1}</td>
                   <td>
-                    <Link to={`/scorecard/${player?._id}`}>{player.name}</Link>
+                    <button onClick={() => setCurrentPlayer(player)}>
+                      {player.name}
+                    </button>
                   </td>
                   <td>{player.totalScore}</td>
                   <td>
@@ -77,19 +115,13 @@ function Leaderboard() {
             </tbody>
           </table>
         </div>
-        <Link
-          style={{
-            marginTop: '15px',
-            display: 'inline-block',
-          }}
-          to="/"
-        >
-          Back to home
-        </Link>
+        <br />
+        <br />
+        <Link to="/">Back to home</Link>
       </div>
     );
   } else {
-    return <Loading />;
+    return null;
   }
 }
 
