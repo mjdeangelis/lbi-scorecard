@@ -172,7 +172,9 @@ function Scorecard() {
             &lt; Hole {getPrevHole(currentHole)}
           </button>
           <div className="hole-info">
-            <p className="hole-number">Hole {currentHole}</p>
+            <p className="hole-number">
+              Hole {currentHole} ({tournament?.holes[currentHole - 1]?.alias})
+            </p>
             <p className="hole-par">
               Par {tournament?.holes[currentHole - 1]?.par} &#8226;{' '}
               {tournament?.holes[currentHole - 1]?.yards} yards

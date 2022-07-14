@@ -13,15 +13,18 @@ function Leaderboard() {
     const idlePlayers = players.filter((player) => player.thru === 0);
     const playersWhoStarted = players.filter((player) => player.thru > 0);
     const sortedPlayers = playersWhoStarted.sort(
-      (a, b) => a.parScore - b.parScore
+      (a, b) => a.netScore - b.netScore
     );
-    return [...sortedPlayers, ...idlePlayers];
+    const sortedIdlePlayers = idlePlayers.sort(
+      (a, b) => a.netScore - b.netScore
+    );
+    return [...sortedPlayers, ...sortedIdlePlayers];
   };
 
   const getPlayers = async () => {
     try {
       const res = await fetch(
-        `${process.env.REACT_APP_API_URL}players/getTournamentPlayers/62b66f3a823df6535020cf38`
+        `${process.env.REACT_APP_API_URL}players/getTournamentPlayers/62d06d5b22205616a2c67323`
       );
       const players = await res.json();
 
@@ -101,7 +104,10 @@ function Leaderboard() {
                 <tr key={player._id}>
                   <td>{index + 1}</td>
                   <td>
-                    <button onClick={() => setCurrentPlayer(player)}>
+                    <button
+                      className="btn-link"
+                      onClick={() => setCurrentPlayer(player)}
+                    >
                       {player.name}
                     </button>
                   </td>
@@ -118,6 +124,8 @@ function Leaderboard() {
         <br />
         <br />
         <Link to="/">Back to home</Link>
+        <br />
+        <br />
       </div>
     );
   } else {

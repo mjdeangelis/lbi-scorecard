@@ -10,7 +10,7 @@ export function PasswordPrompt({ player, handleChange }) {
     if (password == null || password == '') {
       handleChange(player, null);
       // todo: make this player.password
-    } else if (password.toLowerCase() == player.handicap) {
+    } else if (password.toLowerCase() == player.password) {
       handleChange(player, true);
     } else {
       handleChange(player, false);

@@ -23,7 +23,7 @@ function App() {
   const getTournament = async () => {
     try {
       const res = await fetch(
-        `${process.env.REACT_APP_API_URL}tournaments/getTournament/62b66f3a823df6535020cf38`
+        `${process.env.REACT_APP_API_URL}tournaments/getTournament/62d06d5b22205616a2c67323`
       );
       const tournament = await res.json();
       setTournament(tournament);

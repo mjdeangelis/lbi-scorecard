@@ -19,7 +19,7 @@ export function Home() {
     console.log('getPlayers()');
     try {
       const res = await fetch(
-        `${process.env.REACT_APP_API_URL}players/getTournamentPlayers/62b66f3a823df6535020cf38`
+        `${process.env.REACT_APP_API_URL}players/getTournamentPlayers/62d06d5b22205616a2c67323`
       );
       const players = await res.json();
       setPlayers(players);
@@ -57,7 +57,7 @@ export function Home() {
         (styles, item) =>
           item && (
             <div style={styles}>
-              <h1>{tournament.name}</h1>
+              <h1>{tournament?.name}</h1>
               <PlayersList style={styles} players={players} />
               <hr />
               <h2>Spectators only.</h2>
