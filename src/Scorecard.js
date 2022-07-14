@@ -86,11 +86,11 @@ function Scorecard() {
         addMessage ? 'Password cannot be blank.' : ''
       } Please enter your team password.`,
       ''
-    ).autoFocus;
+    );
     console.log('password', password);
     if (password == null || password == '') {
-      // showPasswordPrompt(player, true);
       return false;
+      // todo: make this player.password
     } else if (password.toLowerCase() == player.handicap) {
       return true;
     } else {
@@ -109,21 +109,15 @@ function Scorecard() {
     setCurrentHole(newPlayer.currentHole);
     console.log('isAuthenticated', isAuthenticated);
 
-    if (!isAuthenticated) {
+    const passwordHasBeenEntered = window.localStorage.getItem(newPlayer._id);
+
+    if (passwordHasBeenEntered === 'true') {
+      setIsAuthenticated(true);
+    } else if (!isAuthenticated) {
       const result = showPasswordPrompt(newPlayer, false);
-      console.log('result', result);
+      window.localStorage.setItem(newPlayer._id, result);
       setIsAuthenticated(result);
     }
-
-    console.log('moving on', isAuthenticated);
-
-    // if (isAuthenticated) {
-    //   setPlayer(newPlayer);
-    //   setCurrentHole(newPlayer.currentHole);
-    //   setIsDoneLoading(true);
-    // } else {
-    //   return;
-    // }
   };
 
   useEffect(() => {
