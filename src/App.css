@@ -171,7 +171,8 @@ hr {
 .btn-teeoff {
   display: inline-flex;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  margin-bottom: 1rem; }
 
 .unstyled-list {
   list-style: none;
@@ -179,7 +180,7 @@ hr {
   margin: 0; }
 
 .golfers {
-  margin: 2rem auto; }
+  margin: 1rem auto 2rem; }
 .player-list {
   }
   .player-list li {
@@ -375,14 +376,18 @@ tr:nth-child(even) td {
 select {
   appearance: none;
   border: none;
-  outline: none;
   padding: 0.5em;
   border-radius: 0.25em;
 }
 
 .select-container {
   display: inline-block;
-  position: relative; }
+  position: relative;
+  width: 300px;
+  max-width: 100%; }
+  .select-container select {
+    width: 100%;
+    font-size: 1.2rem; }
   .select-container:after {
     content: '';
     background: url('./angle-small-down.svg');
@@ -390,7 +395,7 @@ select {
     background-repeat: no-repeat;
     background-size: contain;
     position: absolute;
-    top: 3px;
+    top: 7px;
     right: 5px;
     width: 30px;
     height: 30px;

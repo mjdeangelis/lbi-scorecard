@@ -58,15 +58,6 @@ export function PlayersList({ players }) {
         Select the golfer you are keeping score for,
         <br /> and tap the Tee Off button
       </p>
-      {
-        <button
-          className="btn btn-teeoff"
-          onClick={() => handleTeeOffClick(currentPlayer)}
-        >
-          <img src={icon} className="btn-icon" alt="Golf icon" />
-          Tee Off
-        </button>
-      }
       <div className="golfers">
         <h2>Golfers</h2>
         <div className="player-list">
@@ -88,6 +79,13 @@ export function PlayersList({ players }) {
           </div>
         </div>
       </div>
+      <button
+        className="btn btn-teeoff"
+        onClick={() => handleTeeOffClick(currentPlayer)}
+      >
+        <img src={icon} className="btn-icon" alt="Golf icon" />
+        Tee Off
+      </button>
     </div>
   );
 }
