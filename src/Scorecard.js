@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { TournamentContext } from './App';
 import { Header } from './Header';
 import { Loading } from './Loading';
@@ -11,12 +11,14 @@ import { useSpring, useTransition, animated } from 'react-spring';
  * Figure out how to store hole/course data globally (figuring out par on each hole)
  */
 function Scorecard() {
+  let navigate = useNavigate();
   const { id } = useParams();
   const [player, setPlayer] = useState({});
   const [currentHole, setCurrentHole] = useState(null);
   const [newScores, setNewScores] = useState([0, 0]);
   const [isDoneLoading, setIsDoneLoading] = useState(false);
   const [logoShouldStop, setLogoShouldStop] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const tournament = useContext(TournamentContext);
   let preloader;
 
@@ -71,19 +73,59 @@ function Scorecard() {
     setNewScores(newScores.map((score, j) => (j === i ? newScore : score)));
   };
 
+  const showPasswordPrompt = (player, addMessage) => {
+    let password = prompt(
+      `${
+        addMessage ? 'Password cannot be blank.' : ''
+      } Please enter your team password.`,
+      ''
+    );
+    console.log('password', password);
+    if (password == null || password == '') {
+      // showPasswordPrompt(player, true);
+      return false;
+    } else if (password.toLowerCase() == player.handicap) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const getPlayerDetails = async (id) => {
+    console.log('getPlayerDetails()');
     const res = await fetch(
       `${process.env.REACT_APP_API_URL}/players/details/${id}`
     );
     const newPlayer = await res.json();
-    // preloader.finish().then(() => {
+
     setPlayer(newPlayer);
     setCurrentHole(newPlayer.currentHole);
-    setIsDoneLoading(true);
-    // });
-    // setPlayer(newPlayer);
-    // setCurrentHole(newPlayer.currentHole);
+    console.log('isAuthenticated', isAuthenticated);
+
+    if (!isAuthenticated) {
+      const result = showPasswordPrompt(newPlayer, false);
+      console.log('result', result);
+      setIsAuthenticated(result);
+    }
+
+    console.log('moving on', isAuthenticated);
+
+    // if (isAuthenticated) {
+    //   setPlayer(newPlayer);
+    //   setCurrentHole(newPlayer.currentHole);
+    //   setIsDoneLoading(true);
+    // } else {
+    //   return;
+    // }
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      setIsDoneLoading(true);
+    } else {
+      return;
+    }
+  }, [isAuthenticated]);
 
   const updateCurrentHole = async (newHole) => {
     const requestOptions = {
@@ -158,7 +200,25 @@ function Scorecard() {
     delay: 200,
   });
 
-  if (tournament?.name && player?.name) {
+  if (!isAuthenticated) {
+    return (
+      <div>
+        <Header />
+        <div>
+          <p>Incorrect password. Try again or return to the homepage.</p>
+          <button
+            className="btn btn--block"
+            onClick={() => getPlayerDetails(id)}
+          >
+            Try again
+          </button>
+          <Link className="btn btn--block btn--secondary" to="/">
+            Return to homepage.
+          </Link>
+        </div>
+      </div>
+    );
+  } else if (tournament?.name && player?.name) {
     return (
       <div>
         <animated.div style={logoStyles}>

@@ -13,6 +13,7 @@ import logo from './logo.png';
 import { Home } from './Home';
 import Leaderboard from './Leaderboard';
 import Scorecard from './Scorecard';
+// import ScoredcardGuard from './ScoredcardGuard';
 
 function Main() {
   let location = useLocation();
