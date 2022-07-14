@@ -86,7 +86,7 @@ function Scorecard() {
         addMessage ? 'Password cannot be blank.' : ''
       } Please enter your team password.`,
       ''
-    );
+    ).autoFocus;
     console.log('password', password);
     if (password == null || password == '') {
       // showPasswordPrompt(player, true);
