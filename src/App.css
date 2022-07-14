@@ -15,7 +15,7 @@ body {
   color: var(--white);
   font-family: 'Merriweather', serif;
   font-weight: 300;
-  /* height: 100vh; */
+  /* height: var(--app-height); */
   /* width: 100%; */
 }
 
@@ -52,11 +52,11 @@ hr {
   position: relative;
   max-width: 100%;
   padding: 2rem 1rem 0;
-  min-height: 100vh;
+  min-height: var(--app-height);
   margin: 0 auto; }
   /* .container > div {
     width: 100%;
-    height: 100vh; } */
+    height: var(--app-height); } */
   .container .transitionRouteContainer {
     position: absolute;
     padding: 1rem;
@@ -73,7 +73,7 @@ hr {
   background-image: url('./leroy-background-min.jpg');
   background-position: center;
   background-repeat: no-repeat;
-  /* background-size: 100vh; */
+  /* background-size: var(--app-height); */
   background-size: cover;
   background-attachment: fixed;
   position: fixed;
@@ -83,7 +83,7 @@ hr {
   top: 0;
   margin: 0 auto;
   width: 100%;
-  height: 100vh;
+  height: var(--app-height);
   z-index: -2;
 }
 
@@ -95,7 +95,7 @@ hr {
   top: 0;
   margin: 0 auto;
   width: 100%;
-  height: 100vh;
+  height: var(--app-height);
   background: rgba(84,106,162, 0.87);
   /* background: linear-gradient(176deg, rgba(84,106,162,0.9) 0%, rgba(84,106,162,0.9) 30%, rgba(0,0,0,0.9) 100%); */
   z-index: -1;

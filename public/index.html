@@ -38,36 +38,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400&family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <title>Leroy Brown Invitational | Live Scoring</title>
   </head>
-  <style>
-    .background-image {
-      background-image: url('./background2.jpg');
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: 100vh;
-      background-attachment: fixed;
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      top: 0;
-      margin: 0 auto;
-      width: 100%;
-      height: 100vh;
-      z-index: -2;
+  <script>
+    const appHeight = () => {
+      const doc = document.documentElement;
+      doc.style.setProperty('--app-height', `${window.innerHeight}px`);
     }
-
-    .background-overlay {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      top: 0;
-      margin: 0 auto;
-      width: 100%;
-      height: 100vh;
-      background: rgba(84,106,162, 0.94);
-      /* background: linear-gradient(176deg, rgba(84,106,162,0.9) 0%, rgba(84,106,162,0.9) 30%, rgba(0,0,0,0.9) 100%); */
-      z-index: -1;
+    window.addEventListener('resize', appHeight);
+    appHeight();
+  </script>
+  <style>
+    :root {
+      --app-height: 100%;
     }
   </style>
   <body>
