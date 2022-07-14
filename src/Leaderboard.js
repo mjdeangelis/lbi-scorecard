@@ -55,9 +55,9 @@ function Leaderboard() {
               <tr>
                 <th>Pos</th>
                 <th>Team</th>
-                <th>+/-</th>
+                <th>Gross</th>
+                <th>Strokes</th>
                 <th>Net</th>
-                <th>Thru</th>
               </tr>
             </thead>
             <tbody>
@@ -67,12 +67,11 @@ function Leaderboard() {
                   <td>
                     <Link to={`/scorecard/${player?._id}`}>{player.name}</Link>
                   </td>
+                  <td>{player.totalScore}</td>
                   <td>
-                    {player.parScore > 0 && <span>+</span>}
-                    {player.parScore}
+                    {player.handicap > 0 && <span>-</span>} {player.handicap}
                   </td>
                   <td>{player.netScore}</td>
-                  <td>{player.thru}</td>
                 </tr>
               ))}
             </tbody>

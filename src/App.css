@@ -304,10 +304,10 @@ table {
   min-width: 100%;
   margin: 0 -1rem;
   grid-template-columns: 
-    minmax(10px, 1fr)
+    minmax(10px, 40px)
     minmax(10px, max-content)
     minmax(10px, 1fr)
-    minmax(10px, 1fr)
+    70px
     minmax(10px, 1fr)
 }
 
