@@ -186,7 +186,7 @@ function Scorecard() {
               validateScores(setCurrentHole, getNextHole(currentHole))
             }
           >
-            Hole {getNextHole(currentHole)} &gt;
+            Hole {getNextHole(currentHole)}&gt;
           </button>
         </div>
         {newScores?.length && (
