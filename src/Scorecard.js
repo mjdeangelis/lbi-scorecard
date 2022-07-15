@@ -19,13 +19,21 @@ function Scorecard() {
   const getPrevHole = (currentHole) =>
     currentHole - 1 < 1 ? 18 : currentHole - 1;
 
-  const getNextHole = (currentHole) =>
-    currentHole + 1 > 18 ? 1 : currentHole + 1;
+  const getNextHole = (currentHole) => {
+    return currentHole + 1 > 18 ? 1 : currentHole + 1;
+  };
 
   const validateScores = async (callback, nextHole) => {
     const hasEmptyScore = newScores.filter(
       (score) => score === 0 || score === null || score === ''
     ).length;
+    // Deleo message
+    if (
+      player.name === 'Deleo/Blake' &&
+      newScores[0] - tournament?.holes[currentHole - 1]?.par >= 2
+    ) {
+      alert('JACKASS');
+    }
     if (hasEmptyScore) {
       const text =
         'You have an empty score. Are you sure you want to go to next hole?';
