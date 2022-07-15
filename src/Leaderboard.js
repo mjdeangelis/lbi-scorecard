@@ -119,6 +119,9 @@ function Leaderboard() {
           <p>
             <em>Scores updated every 20 seconds</em>
           </p>
+          <p>
+            <em>*Not Official - Hand in physical scorecard after round*</em>
+          </p>
           <table>
             <thead>
               <tr>
