@@ -310,6 +310,40 @@ hr {
 .leaderboard-container {
   margin: 3rem auto 0; }
 
+  .player-scorecard-container {
+    grid-column: span 5;
+    padding: 0;
+    background: transparent;
+  }
+
+  .player-scorecard-container th {
+    background: var(--gray-regular);
+    border-left: 1px solid var(--gray-light);
+  }
+
+  .player-scorecard-container th:last-child {
+    border-left: 1px solid var(--gray-light);
+  }
+
+  .player-scorecard-container td {
+    border-left: 1px solid var(--gray-light);
+  }
+  
+
+.player-scorecard-table {
+    margin: 0;
+    grid-template-columns:
+      minmax(max-content, 100px)
+      repeat(19, minmax(30px, 1fr));
+    overflow-x: scroll;
+}
+
+.editTeam {
+  grid-column: span 5;
+  text-align: center;
+  background: var(--gray-light) !important;
+}
+
 table {
   display: grid;
   border-collapse: collapse;

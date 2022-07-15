@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Header } from './Header';
 import { PasswordPrompt } from './PasswordPrompt';
@@ -8,9 +8,10 @@ function Leaderboard() {
   const [players, setPlayers] = useState([]);
   const [currentPlayer, setCurrentPlayer] = useState({});
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
+  // current team is used to display scorecard
+  const [detailsShown, setDetailShown] = useState([]);
 
   const createLeaderboard = (players) => {
-    console.log('players');
     const idlePlayers = players.filter((player) => player.thru === 0);
     const playersWhoStarted = players.filter((player) => player.thru > 0);
     const sortedPlayers = [...playersWhoStarted].sort(
@@ -29,7 +30,7 @@ function Leaderboard() {
 
         player.isTied = score === prevScore || score === nextScore;
         player.place = score === prevScore ? padded[i].place : i + 1;
-        console.log('padded', padded);
+        player.isToggled = false;
         return padded;
       },
       [{ netScore: null }, ...sortedPlayers, { netScore: null }]
@@ -44,6 +45,7 @@ function Leaderboard() {
         player.isTied = score === prevScore || score === nextScore;
         player.place =
           score === prevScore ? padded[i].place : sortedPlayers.length + i + 1;
+        player.isToggled = false;
         return padded;
       },
       [{ netScore: null }, ...sortedIdlePlayers, { netScore: null }]
@@ -78,6 +80,18 @@ function Leaderboard() {
     } else {
       setCurrentPlayer({});
       alert('Incorrect password. Try again.');
+    }
+  };
+
+  const togglePlayerScorecard = (userId) => {
+    const shownState = detailsShown.slice();
+    const index = shownState.indexOf(userId);
+    if (index >= 0) {
+      shownState.splice(index, 1);
+      setDetailShown(shownState);
+    } else {
+      shownState.push(userId);
+      setDetailShown(shownState);
     }
   };
 
@@ -134,25 +148,102 @@ function Leaderboard() {
             </thead>
             <tbody>
               {players.map((player, index) => (
-                <tr key={player._id}>
-                  <td>
-                    {player.isTied && <span>T</span>}
-                    {player.place}
-                  </td>
-                  <td>
-                    <button
-                      className="btn-link"
-                      onClick={() => setCurrentPlayer(player)}
-                    >
-                      {player.name}
-                    </button>
-                  </td>
-                  <td>{player.totalScore}</td>
-                  <td>
-                    {player.handicap > 0 && <span>-</span>} {player.handicap}
-                  </td>
-                  <td>{player.netScore}</td>
-                </tr>
+                <React.Fragment key={player._id}>
+                  <tr>
+                    <td>
+                      {player.isTied && <span>T</span>}
+                      {player.place}
+                    </td>
+                    <td>
+                      <button
+                        className="btn-link"
+                        onClick={() => togglePlayerScorecard(player._id)}
+                      >
+                        {player.name}
+                      </button>
+                    </td>
+                    <td>{player.totalScore}</td>
+                    <td>
+                      {player.handicap > 0 && <span>-</span>} {player.handicap}
+                    </td>
+                    <td>{player.netScore}</td>
+                  </tr>
+                  {/* Team scorecard */}
+                  {detailsShown.includes(player._id) && (
+                    <React.Fragment>
+                      <tr>
+                        <td className="player-scorecard-container">
+                          <table
+                            key={`scoredcard_${player._id}`}
+                            className="player-scorecard-table"
+                          >
+                            <thead>
+                              <tr>
+                                <th></th>
+                                <th>1</th>
+                                <th>2</th>
+                                <th>3</th>
+                                <th>4</th>
+                                <th>5</th>
+                                <th>6</th>
+                                <th>7</th>
+                                <th>8</th>
+                                <th>9</th>
+                                <th>10</th>
+                                <th>11</th>
+                                <th>12</th>
+                                <th>13</th>
+                                <th>14</th>
+                                <th>15</th>
+                                <th>16</th>
+                                <th>17</th>
+                                <th>18</th>
+                                <th>{null}</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {player.players.map(
+                                (indPlayer, indPlayerIndex) => (
+                                  <tr
+                                    key={`scoredcard_${player._id}_${indPlayerIndex}`}
+                                  >
+                                    <td>{indPlayer.name}</td>
+                                    {player.scorecard.map((hole, index) => (
+                                      <td
+                                        key={`scoredcard_${player._id}_${indPlayerIndex}_${index}`}
+                                      >
+                                        {hole.scores[indPlayerIndex]}
+                                      </td>
+                                    ))}
+                                    <td>
+                                      {player.scorecard.reduce(
+                                        (total, hole) =>
+                                          total + hole.scores[indPlayerIndex],
+                                        0
+                                      )}
+                                    </td>
+                                  </tr>
+                                )
+                              )}
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                    </React.Fragment>
+                  )}
+                  {detailsShown.includes(player._id) && (
+                    <tr>
+                      <td className="editTeam">
+                        <button
+                          className="btn-link"
+                          onClick={() => setCurrentPlayer(player)}
+                        >
+                          Edit team
+                        </button>
+                      </td>
+                    </tr>
+                  )}
+                </React.Fragment>
               ))}
             </tbody>
           </table>
