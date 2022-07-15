@@ -77,6 +77,8 @@ function Scorecard() {
   };
 
   const handleSetNewScores = (newScore, i = null) => {
+    const re = /^[0-9\b]+$/;
+
     // If we don't pass an index, we're updating both scores
     if (i === null) {
       setNewScores(newScore);
@@ -85,8 +87,11 @@ function Scorecard() {
     if (newScore !== '' && newScore !== null) {
       newScore = Number(newScore);
     }
-    // Update only one score
-    setNewScores(newScores.map((score, j) => (j === i ? newScore : score)));
+
+    if (newScore === '' || re.test(newScore)) {
+      // Update only one score
+      setNewScores(newScores.map((score, j) => (j === i ? newScore : score)));
+    }
   };
 
   const getPlayerDetails = async (id) => {
