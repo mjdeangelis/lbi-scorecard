@@ -55,11 +55,11 @@ export function PlayersList({ players }) {
         />
       )}
       <p className="intro-text">
-        Select the golfer you are keeping score for,
+        Select the team you are keeping score for,
         <br /> and tap the Tee Off button
       </p>
       <div className="golfers">
-        <h2>Golfers</h2>
+        <h2>Teams</h2>
         <div className="player-list">
           <div className="select-container">
             <select
@@ -67,7 +67,7 @@ export function PlayersList({ players }) {
               defaultValue=""
             >
               <option value="" disabled>
-                Select a player
+                Select a team
               </option>
               {players.length > 0 &&
                 players.map((player) => (
