@@ -170,6 +170,7 @@ function Scorecard() {
             onClick={() => setCurrentHole(getPrevHole(currentHole))}
           >
             &lt; Hole {getPrevHole(currentHole)}
+            <br />({tournament?.holes[getPrevHole(currentHole) - 1]?.alias})
           </button>
           <div className="hole-info">
             <p className="hole-number">
@@ -188,6 +189,7 @@ function Scorecard() {
             }
           >
             Hole {getNextHole(currentHole)}&gt;
+            <br />({tournament?.holes[getNextHole(currentHole) - 1]?.alias})
           </button>
         </div>
         {newScores?.length && (
