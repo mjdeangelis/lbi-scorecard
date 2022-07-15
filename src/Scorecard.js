@@ -34,6 +34,13 @@ function Scorecard() {
     ) {
       alert('JACKASS');
     }
+    console.log('newScores', newScores);
+    if (
+      newScores.includes(8) &&
+      tournament?.holes[currentHole - 1]?.par === 4
+    ) {
+      alert('☃️');
+    }
     if (hasEmptyScore) {
       const text =
         'You have an empty score. Are you sure you want to go to next hole?';
