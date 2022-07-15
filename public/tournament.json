@@ -1,0 +1,155 @@
+{
+  "_id": "62d06d5b22205616a2c67323",
+  "name": "Leroy Brown Invitational",
+  "courseName": "Ramblewood Country Club",
+  "courseRating": 69.8,
+  "courseSlope": 117,
+  "holes": [
+    {
+      "hole": 1,
+      "par": 4,
+      "handicap": 0,
+      "yards": 380,
+      "alias": "W1",
+      "_id": "62d06d5b22205616a2c67324"
+    },
+    {
+      "hole": 2,
+      "par": 4,
+      "handicap": 0,
+      "yards": 350,
+      "alias": "W2",
+      "_id": "62d06d5b22205616a2c67325"
+    },
+    {
+      "hole": 3,
+      "par": 3,
+      "handicap": 0,
+      "yards": 165,
+      "alias": "W3",
+      "_id": "62d06d5b22205616a2c67326"
+    },
+    {
+      "hole": 4,
+      "par": 5,
+      "handicap": 0,
+      "yards": 503,
+      "alias": "W4",
+      "_id": "62d06d5b22205616a2c67327"
+    },
+    {
+      "hole": 5,
+      "par": 4,
+      "handicap": 0,
+      "yards": 382,
+      "alias": "W5",
+      "_id": "62d06d5b22205616a2c67328"
+    },
+    {
+      "hole": 6,
+      "par": 3,
+      "handicap": 0,
+      "yards": 195,
+      "alias": "W6",
+      "_id": "62d06d5b22205616a2c67329"
+    },
+    {
+      "hole": 7,
+      "par": 5,
+      "handicap": 0,
+      "yards": 498,
+      "alias": "W7",
+      "_id": "62d06d5b22205616a2c6732a"
+    },
+    {
+      "hole": 8,
+      "par": 4,
+      "handicap": 0,
+      "yards": 365,
+      "alias": "W8",
+      "_id": "62d06d5b22205616a2c6732b"
+    },
+    {
+      "hole": 9,
+      "par": 4,
+      "handicap": 0,
+      "yards": 353,
+      "alias": "W9",
+      "_id": "62d06d5b22205616a2c6732c"
+    },
+    {
+      "hole": 10,
+      "par": 4,
+      "handicap": 0,
+      "yards": 348,
+      "alias": "R1",
+      "_id": "62d06d5b22205616a2c6732d"
+    },
+    {
+      "hole": 11,
+      "par": 4,
+      "handicap": 0,
+      "yards": 351,
+      "alias": "R2",
+      "_id": "62d06d5b22205616a2c6732e"
+    },
+    {
+      "hole": 12,
+      "par": 5,
+      "handicap": 0,
+      "yards": 526,
+      "alias": "R3",
+      "_id": "62d06d5b22205616a2c6732f"
+    },
+    {
+      "hole": 13,
+      "par": 4,
+      "handicap": 0,
+      "yards": 411,
+      "alias": "R4",
+      "_id": "62d06d5b22205616a2c67330"
+    },
+    {
+      "hole": 14,
+      "par": 3,
+      "handicap": 0,
+      "yards": 171,
+      "alias": "R5",
+      "_id": "62d06d5b22205616a2c67331"
+    },
+    {
+      "hole": 15,
+      "par": 5,
+      "handicap": 0,
+      "yards": 462,
+      "alias": "R6",
+      "_id": "62d06d5b22205616a2c67332"
+    },
+    {
+      "hole": 16,
+      "par": 4,
+      "handicap": 0,
+      "yards": 377,
+      "alias": "R7",
+      "_id": "62d06d5b22205616a2c67333"
+    },
+    {
+      "hole": 17,
+      "par": 4,
+      "handicap": 0,
+      "yards": 411,
+      "alias": "R8",
+      "_id": "62d06d5b22205616a2c67334"
+    },
+    {
+      "hole": 18,
+      "par": 3,
+      "handicap": 0,
+      "yards": 141,
+      "alias": "R9",
+      "_id": "62d06d5b22205616a2c67335"
+    }
+  ],
+  "players": [],
+  "__v": 0
+}

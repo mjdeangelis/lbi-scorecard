@@ -22,9 +22,17 @@ function App() {
 
   const getTournament = async () => {
     try {
-      const res = await fetch(
-        `${process.env.REACT_APP_API_URL}tournaments/getTournament/62d06d5b22205616a2c67323`
-      );
+      // const res = await fetch(
+      //   `${process.env.REACT_APP_API_URL}tournaments/getTournament/62d06d5b22205616a2c67323`
+      // );
+      const res = await fetch('./tournament.json', {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      });
+      // const tournament = await res.json();
+      console.log('res', res);
       const tournament = await res.json();
       setTournament(tournament);
     } catch (e) {
