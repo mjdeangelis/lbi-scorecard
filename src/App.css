@@ -356,9 +356,13 @@ th:last-child {
 td {
   padding-top: 10px;
   padding-bottom: 10px;
-  background: var(--white);
+  background: #fff;
   color: var(--black);
   font-size: 0.75rem;
+}
+
+td:last-child {
+  background: #FFEAD4;
 }
 
 td a {
@@ -367,6 +371,10 @@ td a {
 
 tr:nth-child(even) td {
   background: var(--gray-light);
+}
+
+tr:nth-child(even) td:last-child {
+  background: #EBCCAB;
 }
 
 @keyframes app-logo-spin {
