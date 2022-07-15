@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Header } from './Header';
+import { TournamentContext } from './App';
 import { PasswordPrompt } from './PasswordPrompt';
 
 function Leaderboard() {
@@ -10,6 +11,7 @@ function Leaderboard() {
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
   // current team is used to display scorecard
   const [detailsShown, setDetailShown] = useState([]);
+  const tournament = useContext(TournamentContext);
 
   const createLeaderboard = (players) => {
     const idlePlayers = players.filter((player) => player.thru === 0);
@@ -204,6 +206,13 @@ function Leaderboard() {
                               </tr>
                             </thead>
                             <tbody>
+                              <tr className="par-row">
+                                <td>Par</td>
+                                {tournament.holes.map((hole) => (
+                                  <td key={`hole${hole.hole}`}>{hole.par}</td>
+                                ))}
+                                <td>{null}</td>
+                              </tr>
                               {player.players.map(
                                 (indPlayer, indPlayerIndex) => (
                                   <tr
