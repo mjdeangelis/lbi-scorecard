@@ -240,7 +240,7 @@ function Leaderboard() {
                           className="btn-link"
                           onClick={() => setCurrentPlayer(player)}
                         >
-                          Edit team >
+                          Edit team &gt;
                         </button>
                       </td>
                     </tr>
