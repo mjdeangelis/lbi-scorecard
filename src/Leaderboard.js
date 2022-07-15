@@ -134,16 +134,18 @@ function Leaderboard() {
             <em>Scores updated every 20 seconds</em>
           </p>
           <p>
-            <em>*Not Official - Hand in physical scorecard after round*</em>
+            <strong>
+              <em>*Unofficial - hand in physical scorecard after round*</em>
+            </strong>
           </p>
-          <table>
+          <table className="leaderboard-table">
             <thead>
               <tr>
                 <th>Pos</th>
                 <th>Team</th>
+                <th>Net</th>
                 <th>Gross</th>
                 <th>Strokes</th>
-                <th>Net</th>
               </tr>
             </thead>
             <tbody>
@@ -162,11 +164,11 @@ function Leaderboard() {
                         {player.name}
                       </button>
                     </td>
+                    <td>{player.netScore}</td>
                     <td>{player.totalScore}</td>
                     <td>
                       {player.handicap > 0 && <span>-</span>} {player.handicap}
                     </td>
-                    <td>{player.netScore}</td>
                   </tr>
                   {/* Team scorecard */}
                   {detailsShown.includes(player._id) && (
@@ -198,7 +200,7 @@ function Leaderboard() {
                                 <th>16</th>
                                 <th>17</th>
                                 <th>18</th>
-                                <th>{null}</th>
+                                <th>TOT</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -238,7 +240,7 @@ function Leaderboard() {
                           className="btn-link"
                           onClick={() => setCurrentPlayer(player)}
                         >
-                          Edit team
+                          Edit team >
                         </button>
                       </td>
                     </tr>

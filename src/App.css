@@ -164,8 +164,8 @@ hr {
     -moz-appearance: none;
     background: transparent;
     border: none;
-    text-decoration: underline;
-    color: var(--black); }
+    /* text-decoration: underline; */
+    color: #06c; }
 
 .btn-icon {
   width: 20px;
@@ -317,16 +317,26 @@ hr {
   }
 
   .player-scorecard-container th {
-    background: var(--gray-regular);
-    border-left: 1px solid var(--gray-light);
+    background: var(--gray-light);
+    border-left: 1px solid #fff;
   }
 
   .player-scorecard-container th:last-child {
     border-left: 1px solid var(--gray-light);
   }
 
+  .player-scorecard-container tr {
+    border-top: 1px solid #ddd !important;
+  }
+
   .player-scorecard-container td {
+    border-top: 1px solid var(--gray-light);
     border-left: 1px solid var(--gray-light);
+    background: #fff !important;
+  }
+
+  .player-scorecard-container td:last-child {
+    background: #FFEAD4 !important;
   }
   
 
@@ -334,14 +344,23 @@ hr {
     margin: 0;
     grid-template-columns:
       minmax(max-content, 100px)
-      repeat(19, minmax(30px, 1fr));
+      repeat(18, minmax(30px, 1fr))
+      minmax(40px, 30px);
     overflow-x: scroll;
 }
 
 .editTeam {
   grid-column: span 5;
   text-align: center;
-  background: var(--gray-light) !important;
+  /* background: var(--gray-light) !important; */
+}
+
+.editTeam .btn-link {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  text-decoration: none;
 }
 
 table {
@@ -383,7 +402,7 @@ th {
   color: var(--black);
 }
 
-th:last-child {
+.leaderboard-table th:last-child {
   border: 0;
 }
 
@@ -395,10 +414,6 @@ td {
   font-size: 0.75rem;
 }
 
-td:last-child {
-  background: #FFEAD4;
-}
-
 td a {
   color: var(--black);
 }
@@ -407,7 +422,11 @@ tr:nth-child(even) td {
   background: var(--gray-light);
 }
 
-tr:nth-child(even) td:last-child {
+.leaderboard-table > tbody > tr > td:nth-child(3) {
+  background: #FFEAD4;
+}
+
+.leaderboard-table > tbody > tr:nth-child(even) > td:nth-child(3) {
   background: #EBCCAB;
 }
 
