@@ -313,7 +313,7 @@ hr {
   .player-scorecard-container {
     grid-column: span 5;
     padding: 0;
-    background: transparent;
+    background: var(--white) !important;
   }
 
   .player-scorecard-container th {
