@@ -140,6 +140,9 @@ function Leaderboard() {
               <em>*Unofficial - hand in physical scorecard after round*</em>
             </strong>
           </p>
+          <Link to="/">Back to home</Link>
+          <br />
+          <br />
           <table className="leaderboard-table">
             <thead>
               <tr>
