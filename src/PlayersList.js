@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import icon from './golf-icon-min.png';
+import icon from './golf-icon-white.png';
 import { PasswordPrompt } from './PasswordPrompt';
 
 export function PlayersList({ players }) {
@@ -20,7 +20,7 @@ export function PlayersList({ players }) {
 
   const handleTeeOffClick = (player) => {
     if (!player._id) {
-      alert('Please select a player');
+      alert('Please select a team');
       return;
     }
     // decide if we need to show prompt here
@@ -47,19 +47,20 @@ export function PlayersList({ players }) {
   };
 
   return (
-    <div>
+    <div className="playersList">
       {showPasswordPrompt && (
         <PasswordPrompt
           player={currentPlayer}
           handleChange={handlePasswordPromptChange}
         />
       )}
-      <p className="intro-text">
-        Select the team you are keeping score for,
-        <br /> and tap the Tee Off button
-      </p>
+
       <div className="golfers">
-        <h2>Teams</h2>
+        <h2>Team Selection</h2>
+        <p>
+          Select the team you are keeping score for,
+          <br /> and tap the Tee Off button
+        </p>
         <div className="player-list">
           <div className="select-container">
             <select

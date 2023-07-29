@@ -140,9 +140,9 @@ function Leaderboard() {
               <em>*Unofficial - hand in physical scorecard after round*</em>
             </strong>
           </p>
-          <Link to="/">Back to home</Link>
+          {/* <Link to="/">Back to home</Link>
           <br />
-          <br />
+          <br /> */}
           <table className="leaderboard-table">
             <thead>
               <tr>
@@ -262,11 +262,11 @@ function Leaderboard() {
             </tbody>
           </table>
         </div>
-        <br />
+        {/* <br />
         <br />
         <Link to="/">Back to home</Link>
         <br />
-        <br />
+        <br /> */}
       </div>
     );
   } else {

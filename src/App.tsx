@@ -1,18 +1,10 @@
 import React, { useState, useEffect, createContext } from 'react';
-import {
-  BrowserRouter as Router,
-  // Routes,
-  // Route,
-  // useLocation,
-} from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import './App.css';
 import logo from './logo-min.png';
-
-// import { Home } from "./Home";
-// import Leaderboard from "./Leaderboard";
-// import Scorecard from "./Scorecard";
 import Main from './Main';
+import { Nav } from './components/Nav';
 
 export const TournamentContext = createContext({});
 export const LoadingContext = createContext(false);
@@ -55,6 +47,7 @@ function App() {
               <Route path="/scorecard/:id" element={<Scorecard />} />
               <Route path="/leaderboard" element={<Leaderboard />} />
             </Routes> */}
+            <Nav />
           </Router>
         </TournamentContext.Provider>
       </div>

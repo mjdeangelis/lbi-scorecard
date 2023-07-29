@@ -190,12 +190,12 @@ function Scorecard() {
             onClick={() => setCurrentHole(getPrevHole(currentHole))}
           >
             &lt; Hole {getPrevHole(currentHole)}
-            <br />({tournament?.holes[getPrevHole(currentHole) - 1]?.alias})
+            {/* <br />({tournament?.holes[getPrevHole(currentHole) - 1]?.alias}) */}
           </button>
           <div className="hole-info">
             <p className="hole-number">
-              Hole {currentHole} <br />(
-              {tournament?.holes[currentHole - 1]?.alias})
+              Hole {currentHole}
+              {/* <br />({tournament?.holes[currentHole - 1]?.alias}) */}
             </p>
             <p className="hole-par">
               Par {tournament?.holes[currentHole - 1]?.par} &#8226;{' '}
@@ -209,11 +209,11 @@ function Scorecard() {
             }
           >
             Hole {getNextHole(currentHole)}&gt;
-            <br />({tournament?.holes[getNextHole(currentHole) - 1]?.alias})
+            {/* <br />({tournament?.holes[getNextHole(currentHole) - 1]?.alias}) */}
           </button>
         </div>
         {newScores?.length && (
-          <div className="scorecard">
+          <div className="scorecard app-box">
             <div className="scorecard-player-details">
               <div className="scorecard-team">
                 <p className="scorecard-team-name">
@@ -257,11 +257,11 @@ function Scorecard() {
             </div>
           </div>
         )}
-        <hr />
+        {/* <hr />
         <Link to="/">Back to home</Link>
         <br />
         <br />
-        <Link to="/leaderboard">View full leaderboard</Link>
+        <Link to="/leaderboard">View full leaderboard</Link> */}
       </div>
     );
   } else {

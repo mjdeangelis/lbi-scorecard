@@ -1,35 +1,53 @@
 :root {
+  --body: #2A3034;
   --black: #333;
-  --white: #e6e6e6;
+  --white: #fff;
+  --footer-text: #2A3034;
+  --bensalem: #224D38;
+  /* --white: #e6e6e6; */
   --blue-rw: #546aa2;
   --gray-rw: #797979;
   --green-rw: #8ccdb0;
+  --green-default: #02C58F;
+  --green-bensalem: #224D38;
   --gray-dark: #999;
   --gray-regular: #ccc;
-  --gray-light: #e6e6e6;
+  --gray-light: #f5f5f5;
   --green-dark: #308941;
   --green-regular: #41a700;
-  --green-light: #b6dba6; }
+  --green-light: #b6dba6;
+
+  --nav-link-inactive: #666;
+  --nav-link-active: #2A3034;
+
+  --box-border-radius: 10px;
+
+}
 
 body {
-  color: var(--white);
+  /* color: var(--white); */
+  color: var(--body);
   font-family: 'Merriweather', serif;
   font-weight: 300;
-  /* height: var(--app-height); */
-  /* width: 100%; */
+  background: var(--gray-light)
 }
 
 h1,
 h2,
 h3,
 h4 {
-  color: var(--gray-light);
+  color: #0d0c22;;
   font-family: 'Montserrat', sans-serif; }
 
 h1 {
+  color: var(--white);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.05em; }
+
+/* h2 {
+  color: #0d0c22; } */
 
 p {
   line-height: 1.57em; }
@@ -54,9 +72,6 @@ hr {
   padding: 2rem 1rem 0;
   min-height: var(--app-height);
   margin: 0 auto; }
-  /* .container > div {
-    width: 100%;
-    height: var(--app-height); } */
   .container .transitionRouteContainer {
     position: absolute;
     padding: 1rem;
@@ -70,7 +85,7 @@ hr {
     overflow-x: hidden; }
 
 .background-image {
-  background-image: url('./leroy-background-min.jpg');
+  /* background-image: url('./leroy-background-min.jpg'); */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -86,6 +101,13 @@ hr {
   z-index: -2;
 }
 
+.app-box {
+  background: var(--white);
+  box-shadow: 0 2px 3px 0 rgba(0,0,0,.075);
+  border-radius: var(--box-border-radius);
+  padding: 1rem;
+}
+
 .background-overlay {
   position: fixed;
   left: 0;
@@ -94,8 +116,13 @@ hr {
   top: 0;
   margin: 0 auto;
   width: 100%;
-  height: var(--app-height);
-  background: rgba(84,106,162, 0.9);
+  height: calc(var(--app-height) / 2);
+  /* background-color: rgb(0, 205, 147); */
+  background: rgb(4,163,144);
+  background: linear-gradient(180deg, rgba(4,163,144,1) 0%, rgba(2,197,143,1) 100%);
+  border-bottom-left-radius: 25%;
+  border-bottom-right-radius: 25%;
+  /* background: rgba(84,106,162, 0.9); */
   /* background: linear-gradient(176deg, rgba(84,106,162,0.9) 0%, rgba(84,106,162,0.9) 30%, rgba(0,0,0,0.9) 100%); */
   z-index: -1;
 }
@@ -124,17 +151,83 @@ hr {
 } */
 
 .app-header {
-  }
+}
 
-.intro-text {
-  padding: 0 1rem; }
+.app-footer {
+  background: var(--white);
+  width: 100%;
+  height: 70px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  /* box-shadow: 0 -1px 3px 0 rgba(0,0,0,.075); */
+}
+
+.app-footer .footer-icons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0 0;
+}
+
+.app-footer .footer-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: var(--nav-link-inactive);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: 'Montserrat', sans-serif;
+  opacity: 0.5;
+}
+
+.app-footer .footer-link img {
+  height: 40px;
+  margin: 0 auto 4px;
+  width: auto;
+  filter: invert(39%) sepia(2%) saturate(74%) hue-rotate(351deg) brightness(100%) contrast(88%);
+}
+
+.app-footer .footer-link.active {
+  opacity: 1;
+  color: var(--nav-link-active);
+  font-weight: 500;
+}
+
+.app-footer .footer-link.active img {
+  filter: invert(13%) sepia(14%) saturate(603%) hue-rotate(160deg) brightness(93%) contrast(84%);
+}
+  
+.playersList {
+  background: #fff;
+  /* background: #E6F8F5; */
+  border-radius: var(--box-border-radius);
+  margin-top: 4rem;
+  padding: 1rem;
+  box-shadow: 0 2px 3px 0 rgba(0,0,0,.075);
+}
+
+.leaderboardSection {
+  background: #fff;
+  /* background: #E6F8F5; */
+  border-radius: var(--box-border-radius);
+  margin-top: 1rem;
+  padding: 1rem;
+  box-shadow: 0 2px 3px 0 rgba(0,0,0,.075);
+}
 
 .btn {
   display: inline-block;
   font-weight: 600;
   line-height: 1.5;
-  background: var(--green-rw);
-  color: #000;
+  background: var(--green-default);
+  background-color: rgb(0, 205, 147);
+  color: #fff;
   text-align: center;
   text-decoration: none;
   vertical-align: middle;
@@ -147,7 +240,7 @@ hr {
   font-size: 1rem;
   border-radius: 50rem;
   letter-spacing: 0.02em;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   font-family: 'Montserrat', sans-serif;
   transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out; }
   .btn--block {
@@ -156,7 +249,7 @@ hr {
     margin: 1em auto; }
   .btn--secondary {
     background: transparent;
-    border-color: var(--green-rw);
+    border-color: var(--green-default);
     color: var(--white); }
   .btn-link {
     appearance: none;
@@ -175,7 +268,7 @@ hr {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 1rem; }
+  margin: 1rem auto; }
 
 .unstyled-list {
   list-style: none;
@@ -220,7 +313,7 @@ hr {
     background-color: #ccc; }
   /* When the radio button is checked, add a blue background */
   .radio-container input:checked ~ .checkmark {
-    background-color: var(--green-rw); }
+    background-color: var(--green-default); }
   /* Create the indicator (the dot/circle - hidden when not checked) */
   .radio-container .checkmark:after {
     content: "";
@@ -239,19 +332,25 @@ hr {
     background: #fff; }
 
 .scorecard-header {
+  text-align: left;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  background: rgba(121, 121, 121, 0.75);
+  /* background: var(--bensalem); */
+  border-radius: var(--box-border-radius);
   padding: 0.5em 0;
-  margin: 1.5rem -1rem 0; }
+  width: 100%;
+  margin: 1.5rem auto 0; }
   .hole-info {}
   .hole-number {
-    font-size: 1.75rem;
-    font-weight: 600;
+    color: var(--white);
+    font-size: 2rem;
+    font-weight: 900;
     margin: 0; }
   .hole-par {
     font-size: 1rem;
+    color: var(--white);
+    opacity: 0.75;
     margin: 0 0 0.5em; }
   .nav-btn {
     appearance: none;
@@ -458,11 +557,13 @@ select {
 .select-container {
   display: inline-block;
   position: relative;
+  border: 1px solid #eee;
+  padding: 0.5em 0.25em;
   width: 300px;
   max-width: 100%; }
   .select-container select {
     width: 100%;
-    font-size: 1.2rem; }
+    font-size: 1rem; }
   .select-container:after {
     content: '';
     background: url('./angle-small-down.svg');
@@ -470,7 +571,7 @@ select {
     background-repeat: no-repeat;
     background-size: contain;
     position: absolute;
-    top: 7px;
+    top: 0.75em;
     right: 5px;
     width: 30px;
     height: 30px;
@@ -486,7 +587,7 @@ select {
 .loading p {
   display: inline-block;
   overflow: hidden; /* Ensures the content is not revealed until the animation */
-  border-right: .15em solid var(--green-rw); /* The typwriter cursor */
+  border-right: .15em solid var(--green-default); /* The typwriter cursor */
   white-space: nowrap; /* Keeps the content on a single line */
   margin: 5rem auto 0; /* Gives that scrolling effect as the typing happens */
   letter-spacing: .15em; /* Adjust as needed */
@@ -504,5 +605,10 @@ select {
 /* Typewriter cursor effect */
 @keyframes blink-caret {
   from, to { border-color: transparent }
-  50% { border-color: var(--green-rw); }
+  50% { border-color: var(--green-default); }
+}
+
+/* Utilities */
+.text-dark {
+  color: var(--body);
 }

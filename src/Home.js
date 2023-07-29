@@ -7,6 +7,7 @@ import { Header } from './Header';
 // import { Loading } from './Loading';
 import { PlayersList } from './PlayersList';
 import logo from './logo-min.png';
+import { Footer } from './components/Nav';
 
 export function Home() {
   const tournament = useContext(TournamentContext);
@@ -59,12 +60,13 @@ export function Home() {
             <div style={styles}>
               <h1>{tournament?.name}</h1>
               <PlayersList style={styles} players={players} />
-              <hr />
-              <h2>Spectators only.</h2>
-              <p>Click below to view the outing leaderboard</p>
-              <Link className="btn" to="/leaderboard">
-                View the leaderboard
-              </Link>
+              {/* <div className="leaderboardSection">
+                <h2 className="text-dark">Spectators only.</h2>
+                <p>Click below to view the outing leaderboard</p>
+                <Link className="btn" to="/leaderboard">
+                  View the leaderboard
+                </Link>
+              </div> */}
             </div>
           )
       )}
