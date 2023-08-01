@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Header } from './Header';
-import { TournamentContext } from './App';
+import { TournamentContext } from '../App';
 import { PasswordPrompt } from './PasswordPrompt';
 
 function Leaderboard() {
@@ -131,7 +131,7 @@ function Leaderboard() {
         )}
         <Header />
         <div className="leaderboard-container">
-          <h1>Live leaderboard</h1>
+          <h1>Live Leaderboard</h1>
           <p>
             <em>Scores updated every 20 seconds</em>
           </p>

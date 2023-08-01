@@ -10,19 +10,13 @@ import { useTransition, animated } from 'react-spring';
 import './App.css';
 import logo from './logo-min.png';
 
-import { Home } from './Home';
-import Leaderboard from './Leaderboard';
-import Scorecard from './Scorecard';
+import { Home } from './components/Home';
+import Leaderboard from './components/Leaderboard';
+import Scorecard from './components/Scorecard';
 // import ScoredcardGuard from './ScoredcardGuard';
 
 function Main() {
   let location = useLocation();
-
-  // const transitions = useTransition(location, {
-  //   from: { position: 'absolute', opacity: 0 },
-  //   enter: { opacity: 1 },
-  //   leave: { opacity: 0 },
-  // });
 
   const transitions = useTransition(location, {
     from: { opacity: 0, transform: 'translate(100%, 0)' },
@@ -43,7 +37,11 @@ function Main() {
             <animated.div className="transitionRouteContainer" style={props}>
               <Routes location={item}>
                 <Route path="/" element={<Home />} />
-                <Route path="/scorecard/:id" element={<Scorecard />} />
+                {/* <Route path="/scorecard/:id?" element={<Scorecard />} /> */}
+                <Route path="/scorecard">
+                  <Route path=":id" element={<Scorecard />} />
+                  <Route path="" element={<Scorecard />} />
+                </Route>
                 <Route path="/leaderboard" element={<Leaderboard />} />
               </Routes>
             </animated.div>

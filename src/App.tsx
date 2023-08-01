@@ -23,7 +23,6 @@ function App() {
           Accept: 'application/json',
         },
       });
-      // const tournament = await res.json();
       console.log('res', res);
       const tournament = await res.json();
       setTournament(tournament);
@@ -42,11 +41,6 @@ function App() {
         <TournamentContext.Provider value={tournament}>
           <Router>
             <Main />
-            {/* <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/scorecard/:id" element={<Scorecard />} />
-              <Route path="/leaderboard" element={<Leaderboard />} />
-            </Routes> */}
             <Nav />
           </Router>
         </TournamentContext.Provider>

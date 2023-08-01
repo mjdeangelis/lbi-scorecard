@@ -1,20 +1,15 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useSpring, useTransition, animated } from 'react-spring';
 
-import { TournamentContext } from './App';
+import { TournamentContext } from '../App';
 import { Header } from './Header';
-// import { Loading } from './Loading';
 import { PlayersList } from './PlayersList';
-import logo from './logo-min.png';
-import { Footer } from './components/Nav';
 
 export function Home() {
   const tournament = useContext(TournamentContext);
   const [players, setPlayers] = useState([]);
   const [arePlayersLoaded, setArePlayersLoaded] = useState(false);
   const [logoShouldStop, setLogoShouldStop] = useState(false);
-  let preloader;
 
   const getPlayers = async () => {
     console.log('getPlayers()');
@@ -60,13 +55,6 @@ export function Home() {
             <div style={styles}>
               <h1>{tournament?.name}</h1>
               <PlayersList style={styles} players={players} />
-              {/* <div className="leaderboardSection">
-                <h2 className="text-dark">Spectators only.</h2>
-                <p>Click below to view the outing leaderboard</p>
-                <Link className="btn" to="/leaderboard">
-                  View the leaderboard
-                </Link>
-              </div> */}
             </div>
           )
       )}

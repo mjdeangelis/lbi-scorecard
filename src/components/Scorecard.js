@@ -1,20 +1,79 @@
 import { useState, useEffect, useContext } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { TournamentContext } from './App';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { TournamentContext } from '../App';
 import { Header } from './Header';
 import { useSpring, useTransition, animated } from 'react-spring';
+import { PlayersList } from './PlayersList';
 
 /* todo
  * Figure out how to store hole/course data globally (figuring out par on each hole)
  */
 function Scorecard() {
   const { id } = useParams();
+  let navigate = useNavigate();
+  const [players, setPlayers] = useState({});
   const [player, setPlayer] = useState({});
+  const [hasCurrentPlayer, setHasCurrentPlayer] = useState({});
   const [currentHole, setCurrentHole] = useState(null);
   const [newScores, setNewScores] = useState([0, 0]);
   const [isDoneLoading, setIsDoneLoading] = useState(false);
   const [logoShouldStop, setLogoShouldStop] = useState(false);
   const tournament = useContext(TournamentContext);
+
+  useEffect(() => {
+    console.log('getting player in local storage..');
+    const currentPlayerInLocalStorage =
+      window.localStorage.getItem('currentPlayer');
+    if (currentPlayerInLocalStorage) {
+      setHasCurrentPlayer(true);
+      getPlayerDetails(currentPlayerInLocalStorage);
+    } else {
+      getPlayers();
+      setHasCurrentPlayer(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    getPlayerDetails(id);
+  }, [id]);
+
+  useEffect(() => {
+    console.log('currentHole updated.', currentHole);
+    if (currentHole) {
+      handleSetNewScores(player?.scorecard[currentHole - 1]?.scores);
+      updateCurrentHole(currentHole);
+    }
+  }, [currentHole]);
+
+  useEffect(() => {
+    console.log('newScores changed', newScores);
+    const isEmptyScore = newScores.every((item) => item === 0);
+    const hasNullOrZeroScore = newScores.filter(
+      (item) => item === null || item === '' || item === 0
+    ).length;
+    console.log('isEmptyScore', isEmptyScore);
+    console.log('hasNullOrZeroScore', hasNullOrZeroScore);
+    if (!isEmptyScore && !hasNullOrZeroScore) {
+      console.log('Updated score.');
+      updatePlayerScore(newScores, tournament?.holes[currentHole - 1].par);
+    } else {
+      console.log('Empty score.');
+    }
+  }, [newScores]);
+
+  const getPlayers = async () => {
+    console.log('getPlayers()');
+    try {
+      const res = await fetch(
+        `${process.env.REACT_APP_API_URL}players/getTournamentPlayers/62d06d5b22205616a2c67323`
+      );
+      const players = await res.json();
+      setPlayers(players);
+      // setArePlayersLoaded(true);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const getPrevHole = (currentHole) =>
     currentHole - 1 < 1 ? 18 : currentHole - 1;
@@ -135,34 +194,6 @@ function Scorecard() {
     setPlayer(data);
   };
 
-  useEffect(() => {
-    getPlayerDetails(id);
-  }, [id]);
-
-  useEffect(() => {
-    console.log('currentHole updated.', currentHole);
-    if (currentHole) {
-      handleSetNewScores(player?.scorecard[currentHole - 1]?.scores);
-      updateCurrentHole(currentHole);
-    }
-  }, [currentHole]);
-
-  useEffect(() => {
-    console.log('newScores changed', newScores);
-    const isEmptyScore = newScores.every((item) => item === 0);
-    const hasNullOrZeroScore = newScores.filter(
-      (item) => item === null || item === '' || item === 0
-    ).length;
-    console.log('isEmptyScore', isEmptyScore);
-    console.log('hasNullOrZeroScore', hasNullOrZeroScore);
-    if (!isEmptyScore && !hasNullOrZeroScore) {
-      console.log('Updated score.');
-      updatePlayerScore(newScores, tournament?.holes[currentHole - 1].par);
-    } else {
-      console.log('Empty score.');
-    }
-  }, [newScores]);
-
   const logoStyles = useSpring({
     loop: true,
     from: { rotateZ: 0 },
@@ -178,7 +209,9 @@ function Scorecard() {
     delay: 200,
   });
 
-  if (tournament?.name && player?.name) {
+  if (!hasCurrentPlayer) {
+    return <PlayersList players={players} />;
+  } else if (tournament?.name && player?.name) {
     return (
       <div>
         <animated.div style={logoStyles}>

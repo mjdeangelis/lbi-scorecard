@@ -22,12 +22,16 @@
 
   --box-border-radius: 10px;
 
+  --header-font: 'Playfair Display', serif;
+  --body-font: 'Source Sans 3', sans-serif;
+  --btn-font: 'Playfair Display', serif;
+
 }
 
 body {
   /* color: var(--white); */
   color: var(--body);
-  font-family: 'Merriweather', serif;
+  font-family: var(--body-font);
   font-weight: 300;
   background: var(--gray-light)
 }
@@ -37,7 +41,8 @@ h2,
 h3,
 h4 {
   color: #0d0c22;;
-  font-family: 'Montserrat', sans-serif; }
+  font-family: var(--header-font);
+}
 
 h1 {
   color: var(--white);
@@ -182,10 +187,8 @@ hr {
   align-items: center;
   text-decoration: none;
   color: var(--nav-link-inactive);
+  font-family: var(--btn-font);
   font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-family: 'Montserrat', sans-serif;
   opacity: 0.5;
 }
 
@@ -215,21 +218,14 @@ hr {
   box-shadow: 0 2px 3px 0 rgba(0,0,0,.075);
 }
 
-.leaderboardSection {
-  background: #fff;
-  /* background: #E6F8F5; */
-  border-radius: var(--box-border-radius);
-  margin-top: 1rem;
-  padding: 1rem;
-  box-shadow: 0 2px 3px 0 rgba(0,0,0,.075);
-}
-
 .btn {
   display: inline-block;
   font-weight: 600;
   line-height: 1.5;
   background: var(--green-default);
-  background-color: rgb(0, 205, 147);
+  /* background-color: rgb(0, 205, 147); */
+  background: rgb(4,163,144);
+  background: linear-gradient(180deg, rgba(4,163,144,1) 0%, rgba(2,197,143,1) 100%);
   color: #fff;
   text-align: center;
   text-decoration: none;
@@ -244,7 +240,7 @@ hr {
   border-radius: 50rem;
   letter-spacing: 0.02em;
   /* text-transform: uppercase; */
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--btn-font);
   transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out; }
   .btn--block {
     display: block;
@@ -362,7 +358,7 @@ hr {
     background: transparent;
     border: none;
     outline: none;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: var(--btn-font); */
     font-weight: 700;
     font-size: 0.875rem;
     color: var(--white);
@@ -373,7 +369,7 @@ hr {
     letter-spacing: 0.02em; }
 
 .scorecard {
-  margin: 2rem 0; }
+  /* margin: 2rem 0; */ }
   .scorecard-player {
     display: flex;
     justify-content: space-between;
@@ -388,11 +384,13 @@ hr {
       justify-content: space-between;
       align-items: flex-start; }
     .scorecard-team-name {
+      font-family: var(--header-font);
       font-size: 1.75rem;
       font-weight: 600;
       text-align: left;
       margin: 0; }
     .scorecard-team-score {
+      font-family: var(--header-font);
       font-size: 1.75rem;
       margin: 0; }
   .scorecard-input {
@@ -468,7 +466,7 @@ hr {
   font-weight: 600;
   letter-spacing: 0.02em;
   text-transform: uppercase;
-  font-family: 'Montserrat', sans-serif;
+  font-family: var(--btn-font);
   text-decoration: none;
 }
 

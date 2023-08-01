@@ -1,17 +1,22 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import icon from './golf-icon-white.png';
+import icon from 'icons/golf-icon-white.png';
 import { PasswordPrompt } from './PasswordPrompt';
 
 export function PlayersList({ players }) {
   let navigate = useNavigate();
-  const [currentPlayer, setCurrentPlayer] = useState({});
+  const [selectedPlayer, setSelectedPlayer] = useState({});
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
 
   const handleSelectPlayer = (id) => {
-    const currentPlayer = players.find((item) => item._id === id);
-    setCurrentPlayer(currentPlayer);
+    const selectedPlayerOption = players.find((item) => item._id === id);
+    setSelectedPlayer(selectedPlayerOption);
+  };
+
+  const handleSuccess = (id) => {
+    window.localStorage.setItem('currentPlayer', id);
+    navigateToPlayer(id);
   };
 
   const navigateToPlayer = (id) => {
@@ -25,9 +30,9 @@ export function PlayersList({ players }) {
     }
     // decide if we need to show prompt here
     const passwordHasBeenEntered = window.localStorage.getItem(player._id);
-    console.log('Password has been entered?', passwordHasBeenEntered);
     if (passwordHasBeenEntered == 'true') {
-      navigateToPlayer(player._id);
+      // navigateToPlayer(player._id);
+      handleSuccess(player._id);
     } else {
       setShowPasswordPrompt(true);
     }
@@ -36,9 +41,9 @@ export function PlayersList({ players }) {
   const handlePasswordPromptChange = (player, result) => {
     setShowPasswordPrompt(false);
     window.localStorage.setItem(player._id, result);
-    console.log('We have a result from the prompt', result);
     if (result) {
-      navigateToPlayer(player._id);
+      // navigateToPlayer(player._id);
+      handleSuccess(player._id);
     } else if (result === null) {
       return;
     } else {
@@ -50,7 +55,7 @@ export function PlayersList({ players }) {
     <div className="playersList">
       {showPasswordPrompt && (
         <PasswordPrompt
-          player={currentPlayer}
+          player={selectedPlayer}
           handleChange={handlePasswordPromptChange}
         />
       )}
@@ -82,7 +87,7 @@ export function PlayersList({ players }) {
       </div>
       <button
         className="btn btn-teeoff"
-        onClick={() => handleTeeOffClick(currentPlayer)}
+        onClick={() => handleTeeOffClick(selectedPlayer)}
       >
         <img src={icon} className="btn-icon" alt="Golf icon" />
         Tee Off
