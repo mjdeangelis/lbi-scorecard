@@ -11,6 +11,7 @@ import { PlayersList } from './PlayersList';
 function Scorecard() {
   const { id } = useParams();
   let navigate = useNavigate();
+  const [isTeamScore, setIsTeamScore] = useState({});
   const [players, setPlayers] = useState({});
   const [player, setPlayer] = useState({});
   const [hasCurrentPlayer, setHasCurrentPlayer] = useState({});
@@ -26,6 +27,7 @@ function Scorecard() {
       window.localStorage.getItem('currentPlayer');
     if (currentPlayerInLocalStorage) {
       setHasCurrentPlayer(true);
+      // todo: getPlayerDetails is being called twice
       getPlayerDetails(currentPlayerInLocalStorage);
     } else {
       getPlayers();
@@ -202,12 +204,12 @@ function Scorecard() {
     onRest: () => setLogoShouldStop(isDoneLoading),
   });
 
-  const transitions = useTransition(isDoneLoading, {
-    from: { opacity: 1, transform: 'translate(100%, 0)' },
-    enter: { opacity: 1, transform: 'translate(0, 0)' },
-    leave: { opacity: 1, transform: 'translate(-100%, 0)' },
-    delay: 200,
-  });
+  // const transitions = useTransition(isDoneLoading, {
+  //   from: { opacity: 1, transform: 'translate(100%, 0)' },
+  //   enter: { opacity: 1, transform: 'translate(0, 0)' },
+  //   leave: { opacity: 1, transform: 'translate(-100%, 0)' },
+  //   delay: 200,
+  // });
 
   if (!hasCurrentPlayer) {
     return <PlayersList players={players} />;

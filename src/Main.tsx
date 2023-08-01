@@ -25,9 +25,9 @@ function Main() {
     delay: 200,
   });
 
-  useEffect(() => {
-    console.log('location', location);
-  }, [location]);
+  // useEffect(() => {
+  //   console.log('location', location);
+  // }, [location]);
 
   return (
     <div>

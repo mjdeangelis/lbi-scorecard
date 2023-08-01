@@ -4,6 +4,7 @@
   --white: #fff;
   --footer-text: #2A3034;
   --bensalem: #224D38;
+  --bensalem-yellow: #d5bd49;
   /* --white: #e6e6e6; */
   --blue-rw: #546aa2;
   --gray-rw: #797979;
@@ -122,13 +123,12 @@ hr {
   margin: 0 auto;
   width: 100%;
   height: calc(var(--app-height) / 2);
-  /* background-color: rgb(0, 205, 147); */
   background: rgb(4,163,144);
-  background: linear-gradient(180deg, rgba(4,163,144,1) 0%, rgba(2,197,143,1) 100%);
+  /* background: linear-gradient(180deg, rgba(4,163,144,1) 0%, rgba(2,197,143,1) 100%); */
+  background: linear-gradient(180deg, var(--bensalem) 0%, rgba(2,197,143,1) 100%);
+  /* border-top: 3px solid var(--bensalem-yellow); */
   border-bottom-left-radius: 25%;
   border-bottom-right-radius: 25%;
-  /* background: rgba(84,106,162, 0.9); */
-  /* background: linear-gradient(176deg, rgba(84,106,162,0.9) 0%, rgba(84,106,162,0.9) 30%, rgba(0,0,0,0.9) 100%); */
   z-index: -1;
 }
 
@@ -501,7 +501,7 @@ td {
 th {
   position: sticky;
   top: -1rem;
-  background: var(--green-light);
+  background: var(--bensalem-yellow);
   font-weight: normal;
   font-size: 0.6875rem;
   text-transform: uppercase;
