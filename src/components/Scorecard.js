@@ -11,12 +11,13 @@ import { PlayersList } from './PlayersList';
 function Scorecard() {
   const { id } = useParams();
   let navigate = useNavigate();
-  const [isTeamScore, setIsTeamScore] = useState({});
+  // const [isTeamScore, setIsTeamScore] = useState({});
+  const isTeamScore = true;
   const [players, setPlayers] = useState({});
   const [player, setPlayer] = useState({});
   const [hasCurrentPlayer, setHasCurrentPlayer] = useState({});
   const [currentHole, setCurrentHole] = useState(null);
-  const [newScores, setNewScores] = useState([0, 0]);
+  const [newScores, setNewScores] = useState(null);
   const [isDoneLoading, setIsDoneLoading] = useState(false);
   const [logoShouldStop, setLogoShouldStop] = useState(false);
   const tournament = useContext(TournamentContext);
@@ -42,17 +43,24 @@ function Scorecard() {
   useEffect(() => {
     console.log('currentHole updated.', currentHole);
     if (currentHole) {
-      handleSetNewScores(player?.scorecard[currentHole - 1]?.scores);
+      if (isTeamScore) {
+        handleSetNewScores(player?.scorecard[currentHole - 1]?.teamScore);
+      } else {
+        handleSetNewScores(player?.scorecard[currentHole - 1]?.scores);
+      }
       updateCurrentHole(currentHole);
     }
   }, [currentHole]);
 
   useEffect(() => {
     console.log('newScores changed', newScores);
-    const isEmptyScore = newScores.every((item) => item === 0);
-    const hasNullOrZeroScore = newScores.filter(
-      (item) => item === null || item === '' || item === 0
-    ).length;
+    const isEmptyScore =
+      (isTeamScore && newScores === 0) ||
+      (!isTeamScore && newScores.every((item) => item === 0));
+    const hasNullOrZeroScore =
+      (isTeamScore && hasNullOrEmptyOrZero(newScores)) ||
+      (!isTeamScore &&
+        newScores.filter((item) => hasNullOrEmptyOrZero(item)).length);
     console.log('isEmptyScore', isEmptyScore);
     console.log('hasNullOrZeroScore', hasNullOrZeroScore);
     if (!isEmptyScore && !hasNullOrZeroScore) {
@@ -63,11 +71,15 @@ function Scorecard() {
     }
   }, [newScores]);
 
+  const hasNullOrEmptyOrZero = (input) => {
+    return input === null || input === '' || input === 0;
+  };
+
   const getPlayers = async () => {
     console.log('getPlayers()');
     try {
       const res = await fetch(
-        `${process.env.REACT_APP_API_URL}players/getTournamentPlayers/62d06d5b22205616a2c67323`
+        `${process.env.REACT_APP_API_URL}players/getTournamentPlayers/64c9aa773c7e801258a27a7a`
       );
       const players = await res.json();
       setPlayers(players);
@@ -85,9 +97,10 @@ function Scorecard() {
   };
 
   const validateScores = async (callback, nextHole) => {
-    const hasEmptyScore = newScores.filter(
-      (score) => score === 0 || score === null || score === ''
-    ).length;
+    const hasEmptyScore =
+      (isTeamScore && hasNullOrEmptyOrZero(newScores)) ||
+      (!isTeamScore &&
+        newScores.filter((score) => hasNullOrEmptyOrZero(score)).length);
     // Deleo message
     if (
       player.name === 'Deleo/Blake' &&
@@ -97,8 +110,10 @@ function Scorecard() {
     }
     // Snowman message
     if (
-      newScores.includes(8) &&
-      tournament?.holes[currentHole - 1]?.par === 4
+      (isTeamScore && newScores === 8) ||
+      (!isTeamScore &&
+        newScores.includes(8) &&
+        tournament?.holes[currentHole - 1]?.par === 4)
     ) {
       alert('☃️');
     }
@@ -123,6 +138,7 @@ function Scorecard() {
 
   /* If empty score is given, set it as 0  */
   const handleScoreOnBlur = (newScore, i = null) => {
+    // todo: teamscore
     if (newScore === '' || newScore === 0) {
       handleSetNewScores(0, i);
     }
@@ -131,6 +147,7 @@ function Scorecard() {
   /* If score is 0 before focus, clear it for user  */
   const handleScoreOnFocus = (newScore, i = null) => {
     console.log('handleScoreOnFocus', newScore);
+    // todo: teamscore
     if (newScore == 0) {
       console.log('zero score');
       handleSetNewScores('', i);
@@ -140,11 +157,18 @@ function Scorecard() {
   const handleSetNewScores = (newScore, i = null) => {
     const re = /^[0-9\b]+$/;
 
-    // If we don't pass an index, we're updating both scores
+    // // Check if this is just a team score
+    // if (isTeamScore) {
+    //   setNewScores(newScore);
+    //   return;
+    // }
+
+    // If we don't pass an index, we're updating both scores or single team score
     if (i === null) {
       setNewScores(newScore);
       return;
     }
+
     if (newScore !== '' && newScore !== null) {
       newScore = Number(newScore);
     }
@@ -182,14 +206,16 @@ function Scorecard() {
   };
 
   const updatePlayerScore = async (newScores, par) => {
-    console.log('updatePlayerScore()');
+    console.log('updatePlayerScore()', newScores, par);
+    let endpointUrl = isTeamScore ? 'updateTeamScore' : 'updateScore';
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: player._id, currentHole, newScores, par }),
     };
+
     const response = await fetch(
-      `${process.env.REACT_APP_API_URL}/players/updateScore`,
+      `${process.env.REACT_APP_API_URL}/players/${endpointUrl}`,
       requestOptions
     );
     const data = await response.json();
@@ -247,10 +273,10 @@ function Scorecard() {
             {/* <br />({tournament?.holes[getNextHole(currentHole) - 1]?.alias}) */}
           </button>
         </div>
-        {newScores?.length && (
+        {newScores !== null && (
           <div className="scorecard app-box">
             <div className="scorecard-player-details">
-              <div className="scorecard-team">
+              {/* <div className="scorecard-team">
                 <p className="scorecard-team-name">
                   {player.name} ({player.handicap})
                 </p>
@@ -259,8 +285,37 @@ function Scorecard() {
                   {player.parScore === 0 && 'E'}
                   {player.parScore !== 0 && player.parScore}
                 </p>
-              </div>
+              </div> */}
               <div className="scorecard-players">
+                <div className="scorecard-player">
+                  {/* <p className="scorecard-player-name">{player.name}</p> */}
+                  <div className="scorecard-team">
+                    <p className="scorecard-team-name">{player.name}</p>
+                    <p className="scorecard-team-score">
+                      {player.totalScore} (
+                      {player.parScore > 0 && <span>+</span>}
+                      {player.parScore === 0 && 'E'}
+                      {player.parScore !== 0 && player.parScore})
+                    </p>
+                  </div>
+                  <div className="scorecard-input">
+                    <input
+                      type="text"
+                      maxLength={2}
+                      inputMode="numeric"
+                      onFocus={(event) =>
+                        handleScoreOnFocus(event.target.value)
+                      }
+                      onBlur={(event) => handleScoreOnBlur(event.target.value)}
+                      value={newScores}
+                      onChange={(event) =>
+                        handleSetNewScores(event.target.value)
+                      }
+                    />
+                  </div>
+                </div>
+              </div>
+              {/* <div className="scorecard-players">
                 {player.players.map((teamPlayer, i) => (
                   <div className="scorecard-player" key={`player${i}`}>
                     <p className="scorecard-player-name">{teamPlayer.name}</p>
@@ -283,7 +338,7 @@ function Scorecard() {
                     </div>
                   </div>
                 ))}
-              </div>
+              </div> */}
               <p>
                 <em>
                   <strong>Remember to fill out your physical scorecard!</strong>

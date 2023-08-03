@@ -17,32 +17,32 @@ function Leaderboard() {
     const idlePlayers = players.filter((player) => player.thru === 0);
     const playersWhoStarted = players.filter((player) => player.thru > 0);
     const sortedPlayers = [...playersWhoStarted].sort(
-      (a, b) => a.netScore - b.netScore
+      (a, b) => a.parScore - b.parScore
     );
     const sortedIdlePlayers = [...idlePlayers].sort(
-      (a, b) => a.netScore - b.netScore
+      (a, b) => a.parScore - b.parScore
     );
     /* Account for possible ties */
     console.log('sortedPlayers 1', sortedPlayers);
     sortedPlayers.reduce(
       (padded, player, i) => {
-        const score = player.netScore;
-        const prevScore = padded[i].netScore;
-        const nextScore = padded[i + 2].netScore;
+        const score = player.parScore;
+        const prevScore = padded[i].parScore;
+        const nextScore = padded[i + 2].parScore;
 
         player.isTied = score === prevScore || score === nextScore;
         player.place = score === prevScore ? padded[i].place : i + 1;
         player.isToggled = false;
         return padded;
       },
-      [{ netScore: null }, ...sortedPlayers, { netScore: null }]
+      [{ parScore: null }, ...sortedPlayers, { parScore: null }]
     );
     /* Sort idle players - note that we added sortedPlayers.length to place to account for already ranked players */
     sortedIdlePlayers.reduce(
       (padded, player, i) => {
-        const score = player.netScore;
-        const prevScore = padded[i].netScore;
-        const nextScore = padded[i + 2].netScore;
+        const score = player.parScore;
+        const prevScore = padded[i].parScore;
+        const nextScore = padded[i + 2].parScore;
 
         player.isTied = score === prevScore || score === nextScore;
         player.place =
@@ -50,7 +50,7 @@ function Leaderboard() {
         player.isToggled = false;
         return padded;
       },
-      [{ netScore: null }, ...sortedIdlePlayers, { netScore: null }]
+      [{ parScore: null }, ...sortedIdlePlayers, { parScore: null }]
     );
     return [...sortedPlayers, ...sortedIdlePlayers];
   };
@@ -58,7 +58,7 @@ function Leaderboard() {
   const getPlayers = async () => {
     try {
       const res = await fetch(
-        `${process.env.REACT_APP_API_URL}players/getTournamentPlayers/62d06d5b22205616a2c67323`
+        `${process.env.REACT_APP_API_URL}players/getTournamentPlayers/64c9aa773c7e801258a27a7a`
       );
       const players = await res.json();
 
@@ -132,10 +132,10 @@ function Leaderboard() {
         <Header />
         <div className="leaderboard-container">
           <h1>Live Leaderboard</h1>
-          <p>
+          <p className="white-text">
             <em>Scores updated every 20 seconds</em>
           </p>
-          <p>
+          <p className="white-text">
             <strong>
               <em>*Unofficial - hand in physical scorecard after round*</em>
             </strong>
@@ -150,7 +150,7 @@ function Leaderboard() {
                 <th>Team</th>
                 <th>Net</th>
                 <th>Gross</th>
-                <th>Strokes</th>
+                <th>Thru</th>
               </tr>
             </thead>
             <tbody>
@@ -169,10 +169,14 @@ function Leaderboard() {
                         {player.name}
                       </button>
                     </td>
-                    <td>{player.netScore}</td>
+                    <td>
+                      {player.parScore > 0 && <span>+</span>}{' '}
+                      {player.parScore === 0 ? 'E' : player.parScore}
+                    </td>
                     <td>{player.totalScore}</td>
                     <td>
-                      {player.handicap > 0 && <span>-</span>} {player.handicap}
+                      {player.thru}
+                      {/* {player.handicap > 0 && <span>-</span>} {player.handicap} */}
                     </td>
                   </tr>
                   {/* Team scorecard */}
@@ -216,7 +220,21 @@ function Leaderboard() {
                                 ))}
                                 <td>{null}</td>
                               </tr>
-                              {player.players.map(
+                              <tr key={`scoredcard_${player._id}`}>
+                                <td>{player.name}</td>
+                                {player.scorecard.map((hole, index) => (
+                                  <td key={`scoredcard_${player._id}_${index}`}>
+                                    {hole.teamScore}
+                                  </td>
+                                ))}
+                                <td>
+                                  {player.scorecard.reduce(
+                                    (total, hole) => total + hole.teamScore,
+                                    0
+                                  )}
+                                </td>
+                              </tr>
+                              {/* {player.players.map(
                                 (indPlayer, indPlayerIndex) => (
                                   <tr
                                     key={`scoredcard_${player._id}_${indPlayerIndex}`}
@@ -238,7 +256,7 @@ function Leaderboard() {
                                     </td>
                                   </tr>
                                 )
-                              )}
+                              )} */}
                             </tbody>
                           </table>
                         </td>

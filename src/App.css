@@ -30,7 +30,6 @@
 }
 
 body {
-  /* color: var(--white); */
   color: var(--body);
   font-family: var(--body-font);
   font-weight: 300;
@@ -64,6 +63,25 @@ a {
 hr {
   border-top: 1px solid var(--white);
   border-bottom: none; }
+
+.home-text {
+  margin-top: 2rem;
+}
+
+.home-header-text {
+  margin: 0;
+}
+
+.script-text {
+  color: var(--white);
+  font-family: 'Playball';
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.white-text {
+  color: var(--white);
+}
 
 .app {
   text-align: center;
@@ -211,9 +229,8 @@ hr {
   
 .playersList {
   background: #fff;
-  /* background: #E6F8F5; */
   border-radius: var(--box-border-radius);
-  margin-top: 4rem;
+  margin-top: 2rem;
   padding: 1rem;
   box-shadow: 0 2px 3px 0 rgba(0,0,0,.075);
 }
@@ -381,6 +398,7 @@ hr {
     }
     .scorecard-team {
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
       align-items: flex-start; }
     .scorecard-team-name {

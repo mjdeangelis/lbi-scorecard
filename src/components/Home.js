@@ -15,7 +15,7 @@ export function Home() {
     console.log('getPlayers()');
     try {
       const res = await fetch(
-        `${process.env.REACT_APP_API_URL}players/getTournamentPlayers/62d06d5b22205616a2c67323`
+        `${process.env.REACT_APP_API_URL}players/getTournamentPlayers/64c9aa773c7e801258a27a7a`
       );
       const players = await res.json();
       setPlayers(players);
@@ -52,8 +52,10 @@ export function Home() {
       {transitions(
         (styles, item) =>
           item && (
-            <div style={styles}>
-              <h1>{tournament?.name}</h1>
+            <div className="home-text" style={styles}>
+              <p className="script-text">Welcome to the</p>
+              <h1 class="home-header-text">{tournament?.name}</h1>
+              <p className="script-text">at Bensalem Country Club </p>
               <PlayersList style={styles} players={players} />
             </div>
           )
