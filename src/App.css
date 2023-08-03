@@ -230,7 +230,7 @@ hr {
 .playersList {
   background: #fff;
   border-radius: var(--box-border-radius);
-  margin-top: 1rem;
+  margin: 1rem 0 2rem;
   padding: 1rem;
   box-shadow: 0 2px 3px 0 rgba(0,0,0,.075);
 }
