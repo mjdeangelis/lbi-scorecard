@@ -65,7 +65,7 @@ hr {
   border-bottom: none; }
 
 .home-text {
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .home-header-text {
@@ -230,7 +230,7 @@ hr {
 .playersList {
   background: #fff;
   border-radius: var(--box-border-radius);
-  margin-top: 2rem;
+  margin-top: 1rem;
   padding: 1rem;
   box-shadow: 0 2px 3px 0 rgba(0,0,0,.075);
 }
