@@ -29,6 +29,10 @@ function Scorecard() {
     if (currentPlayerInLocalStorage) {
       setHasCurrentPlayer(true);
       // todo: getPlayerDetails is being called twice
+      console.log(
+        'currentPlayerInLocalStorage!!!',
+        currentPlayerInLocalStorage
+      );
       getPlayerDetails(currentPlayerInLocalStorage);
     } else {
       getPlayers();
@@ -37,7 +41,9 @@ function Scorecard() {
   }, []);
 
   useEffect(() => {
-    getPlayerDetails(id);
+    if (id) {
+      getPlayerDetails(id);
+    }
   }, [id]);
 
   useEffect(() => {
@@ -180,7 +186,7 @@ function Scorecard() {
   };
 
   const getPlayerDetails = async (id) => {
-    console.log('getPlayerDetails()');
+    console.log('getPlayerDetails()', id);
     const res = await fetch(
       `${process.env.REACT_APP_API_URL}/players/details/${id}`
     );

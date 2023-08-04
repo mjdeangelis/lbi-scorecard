@@ -140,7 +140,7 @@ hr {
   top: 0;
   margin: 0 auto;
   width: 100%;
-  height: calc(var(--app-height) / 2);
+  height: calc(var(--app-height) / 1.5);
   background: rgb(4,163,144);
   /* background: linear-gradient(180deg, rgba(4,163,144,1) 0%, rgba(2,197,143,1) 100%); */
   background: linear-gradient(180deg, var(--bensalem) 0%, rgba(2,197,143,1) 100%);

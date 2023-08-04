@@ -54,7 +54,7 @@ export function Home() {
           item && (
             <div className="home-text" style={styles}>
               <p className="script-text">Welcome to the</p>
-              <h1 class="home-header-text">{tournament?.name}</h1>
+              <h1 className="home-header-text">{tournament?.name}</h1>
               <p className="script-text">at Bensalem Country Club </p>
               <PlayersList style={styles} players={players} />
             </div>
