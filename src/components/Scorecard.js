@@ -110,9 +110,22 @@ function Scorecard() {
     // Deleo message
     if (
       player.name === 'Deleo/Blake' &&
-      newScores[0] - tournament?.holes[currentHole - 1]?.par >= 2
+      ((!isTeamScore &&
+        newScores[0] - tournament?.holes[currentHole - 1]?.par >= 1) ||
+        (isTeamScore &&
+          newScores - tournament?.holes[currentHole - 1]?.par >= 1))
     ) {
-      alert('JACKASS');
+      alert('JACKASSES');
+    }
+    // Pos new crew message
+    if (
+      player.name === 'Kohler/Gibson' &&
+      ((!isTeamScore &&
+        newScores[0] - tournament?.holes[currentHole - 1]?.par >= 1) ||
+        (isTeamScore &&
+          newScores - tournament?.holes[currentHole - 1]?.par >= 1))
+    ) {
+      alert('Thought you guys were pros?');
     }
     // Snowman message
     if (
