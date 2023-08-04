@@ -118,7 +118,7 @@ function Scorecard() {
       alert('JACKASSES');
     }
     // Pos new crew message
-    if (
+    else if (
       player.name === 'Kohler/Gibson' &&
       ((!isTeamScore &&
         newScores[0] - tournament?.holes[currentHole - 1]?.par >= 1) ||
@@ -128,14 +128,45 @@ function Scorecard() {
       alert('Thought you guys were pros?');
     }
     // Snowman message
-    if (
-      (isTeamScore && newScores === 8) ||
+    else if (
+      (isTeamScore &&
+        newScores === 8 &&
+        tournament?.holes[currentHole - 1]?.par === 4) ||
       (!isTeamScore &&
         newScores.includes(8) &&
         tournament?.holes[currentHole - 1]?.par === 4)
     ) {
       alert('☃️');
     }
+    // Generic bogey message
+    else if (
+      (!isTeamScore &&
+        newScores[0] - tournament?.holes[currentHole - 1]?.par >= 1) ||
+      (isTeamScore && newScores - tournament?.holes[currentHole - 1]?.par >= 1)
+    ) {
+      alert('Yikes 😬');
+    }
+
+    // Generic birdie message
+    else if (
+      (!isTeamScore &&
+        newScores[0] - tournament?.holes[currentHole - 1]?.par === -1) ||
+      (isTeamScore &&
+        newScores - tournament?.holes[currentHole - 1]?.par === -1)
+    ) {
+      alert('🐦');
+    }
+
+    // Generic eagle message
+    else if (
+      (!isTeamScore &&
+        newScores[0] - tournament?.holes[currentHole - 1]?.par === -2) ||
+      (isTeamScore &&
+        newScores - tournament?.holes[currentHole - 1]?.par === -2)
+    ) {
+      alert('🦅');
+    }
+
     if (hasEmptyScore) {
       const text =
         'You have an empty score. Are you sure you want to go to next hole?';
