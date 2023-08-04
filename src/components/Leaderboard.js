@@ -203,7 +203,7 @@ function Leaderboard() {
                         className="btn-link"
                         onClick={() => togglePlayerScorecard(player._id)}
                       >
-                        {player.name}
+                        {player.name} ({player.handicap})
                       </button>
                     </td>
                     <td>
