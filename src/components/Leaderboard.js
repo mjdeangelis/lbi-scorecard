@@ -9,6 +9,8 @@ function Leaderboard() {
   const [players, setPlayers] = useState([]);
   const [currentPlayer, setCurrentPlayer] = useState({});
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
+  const [lastUpdatedTime, setLastUpdatedTime] = useState(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   // current team is used to display scorecard
   const [detailsShown, setDetailShown] = useState([]);
   const tournament = useContext(TournamentContext);
@@ -23,7 +25,6 @@ function Leaderboard() {
       (a, b) => a.parScore - b.parScore
     );
     /* Account for possible ties */
-    console.log('sortedPlayers 1', sortedPlayers);
     sortedPlayers.reduce(
       (padded, player, i) => {
         const score = player.parScore;
@@ -56,16 +57,42 @@ function Leaderboard() {
   };
 
   const getPlayers = async () => {
+    setIsRefreshing(true);
     try {
       const res = await fetch(
         `${process.env.REACT_APP_API_URL}players/getTournamentPlayers/64c9aa773c7e801258a27a7a`
       );
       const players = await res.json();
 
+      const now = new Date();
+
+      // setLastUpdatedTime(
+      //   `${
+      //     date.getMonth() + 1
+      //   }/${date.getDate()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+      // );
+      setLastUpdatedTime(formatDate(now));
+
       setPlayers(createLeaderboard(players));
+
+      setTimeout(() => {
+        setIsRefreshing(false);
+      }, 1000);
     } catch (e) {
       console.error(e);
     }
+  };
+
+  const formatDate = (date) => {
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const year = date.getFullYear();
+    const hours12 = (date.getHours() % 12 || 12).toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
+    const ampm = date.getHours() >= 12 ? 'PM' : 'AM';
+
+    return `${month}/${day}/${year} ${hours12}:${minutes}:${seconds} ${ampm}`;
   };
 
   const navigateToPlayer = (id) => {
@@ -103,7 +130,6 @@ function Leaderboard() {
       const passwordHasBeenEntered = window.localStorage.getItem(
         currentPlayer._id
       );
-      console.log('Password has been entered?', passwordHasBeenEntered);
       if (passwordHasBeenEntered == 'true') {
         navigateToPlayer(currentPlayer._id);
       } else {
@@ -140,6 +166,17 @@ function Leaderboard() {
               <em>*Unofficial - hand in physical scorecard after round*</em>
             </strong>
           </p>
+          <div className="updated-text">
+            <p className="white-text">
+              <em>
+                {lastUpdatedTime && (
+                  <span>Last updated: {lastUpdatedTime}</span>
+                )}
+              </em>
+            </p>
+            {isRefreshing && <div className="loading-pulse"></div>}
+          </div>
+
           {/* <Link to="/">Back to home</Link>
           <br />
           <br /> */}
