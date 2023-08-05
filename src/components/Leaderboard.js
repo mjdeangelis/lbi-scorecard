@@ -3,6 +3,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Header } from './Header';
 import { TournamentContext } from '../App';
 import { PasswordPrompt } from './PasswordPrompt';
+import PullToRefresh from 'pulltorefreshjs';
+
+const ptr = PullToRefresh.init({
+  mainElement: 'body',
+  onRefresh() {
+    window.location.reload();
+  },
+});
 
 function Leaderboard() {
   let navigate = useNavigate();

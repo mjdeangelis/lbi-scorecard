@@ -5,6 +5,15 @@ import { TournamentContext } from '../App';
 import { Header } from './Header';
 import { PlayersList } from './PlayersList';
 
+import PullToRefresh from 'pulltorefreshjs';
+
+const ptr = PullToRefresh.init({
+  mainElement: 'body',
+  onRefresh() {
+    window.location.reload();
+  },
+});
+
 export function Home() {
   const tournament = useContext(TournamentContext);
   const [players, setPlayers] = useState([]);

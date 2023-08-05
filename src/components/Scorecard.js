@@ -5,6 +5,15 @@ import { Header } from './Header';
 import { useSpring, useTransition, animated } from 'react-spring';
 import { PlayersList } from './PlayersList';
 
+import PullToRefresh from 'pulltorefreshjs';
+
+const ptr = PullToRefresh.init({
+  mainElement: 'body',
+  onRefresh() {
+    window.location.reload();
+  },
+});
+
 /* todo
  * Figure out how to store hole/course data globally (figuring out par on each hole)
  */
