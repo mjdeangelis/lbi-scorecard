@@ -27,31 +27,31 @@ function Leaderboard() {
     const idlePlayers = players.filter((player) => player.thru === 0);
     const playersWhoStarted = players.filter((player) => player.thru > 0);
     const sortedPlayers = [...playersWhoStarted].sort(
-      (a, b) => a.parScore - b.parScore
+      (a, b) => a.netParScore - b.netParScore
     );
     const sortedIdlePlayers = [...idlePlayers].sort(
-      (a, b) => a.parScore - b.parScore
+      (a, b) => a.netParScore - b.netParScore
     );
     /* Account for possible ties */
     sortedPlayers.reduce(
       (padded, player, i) => {
-        const score = player.parScore;
-        const prevScore = padded[i].parScore;
-        const nextScore = padded[i + 2].parScore;
+        const score = player.netParScore;
+        const prevScore = padded[i].netParScore;
+        const nextScore = padded[i + 2].netParScore;
 
         player.isTied = score === prevScore || score === nextScore;
         player.place = score === prevScore ? padded[i].place : i + 1;
         player.isToggled = false;
         return padded;
       },
-      [{ parScore: null }, ...sortedPlayers, { parScore: null }]
+      [{ netParScore: null }, ...sortedPlayers, { netParScore: null }]
     );
     /* Sort idle players - note that we added sortedPlayers.length to place to account for already ranked players */
     sortedIdlePlayers.reduce(
       (padded, player, i) => {
-        const score = player.parScore;
-        const prevScore = padded[i].parScore;
-        const nextScore = padded[i + 2].parScore;
+        const score = player.netParScore;
+        const prevScore = padded[i].netParScore;
+        const nextScore = padded[i + 2].netParScore;
 
         player.isTied = score === prevScore || score === nextScore;
         player.place =
@@ -59,7 +59,7 @@ function Leaderboard() {
         player.isToggled = false;
         return padded;
       },
-      [{ parScore: null }, ...sortedIdlePlayers, { parScore: null }]
+      [{ netParScore: null }, ...sortedIdlePlayers, { netParScore: null }]
     );
     return [...sortedPlayers, ...sortedIdlePlayers];
   };
@@ -215,8 +215,8 @@ function Leaderboard() {
                       </button>
                     </td>
                     <td>
-                      {player.parScore > 0 && <span>+</span>}{' '}
-                      {player.parScore === 0 ? 'E' : player.parScore}
+                      {player.netParScore > 0 && <span>+</span>}{' '}
+                      {player.netParScore === 0 ? 'E' : player.netParScore}
                     </td>
                     <td>{player.totalScore}</td>
                     <td>

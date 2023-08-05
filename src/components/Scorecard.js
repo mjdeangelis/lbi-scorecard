@@ -352,9 +352,9 @@ function Scorecard() {
                     <p className="scorecard-team-name">{player.name}</p>
                     <p className="scorecard-team-score">
                       {player.totalScore} (
-                      {player.parScore > 0 && <span>+</span>}
-                      {player.parScore === 0 && 'E'}
-                      {player.parScore !== 0 && player.parScore})
+                      {player.netParScore > 0 && <span>+</span>}
+                      {player.netParScore === 0 && 'E'}
+                      {player.netParScore !== 0 && player.netParScore})
                     </p>
                   </div>
                   <div className="scorecard-input">
