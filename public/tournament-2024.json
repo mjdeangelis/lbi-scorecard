@@ -1,0 +1,155 @@
+{
+  "_id": "66a5971d57a98add4e0e1466",
+  "name": "Leroy Brown Invitational",
+  "courseName": "Bensalem Country Club",
+  "courseRating": "68.4",
+  "courseSlope": "120",
+  "holes": [
+    {
+      "hole": 1,
+      "par": 4,
+      "handicap": 12,
+      "yards": 311,
+      "alias": "",
+      "_id": "64c9aa773c7e801258a27a7b"
+    },
+    {
+      "hole": 2,
+      "par": 4,
+      "handicap": 2,
+      "yards": 334,
+      "alias": "",
+      "_id": "64c9aa773c7e801258a27a7c"
+    },
+    {
+      "hole": 3,
+      "par": 5,
+      "handicap": 8,
+      "yards": 487,
+      "alias": "",
+      "_id": "64c9aa773c7e801258a27a7d"
+    },
+    {
+      "hole": 4,
+      "par": 3,
+      "handicap": 16,
+      "yards": 146,
+      "alias": "",
+      "_id": "64c9aa773c7e801258a27a7e"
+    },
+    {
+      "hole": 5,
+      "par": 4,
+      "handicap": 10,
+      "yards": 309,
+      "alias": "",
+      "_id": "64c9aa773c7e801258a27a7f"
+    },
+    {
+      "hole": 6,
+      "par": 3,
+      "handicap": 14,
+      "yards": 183,
+      "alias": "",
+      "_id": "64c9aa773c7e801258a27a80"
+    },
+    {
+      "hole": 7,
+      "par": 4,
+      "handicap": 18,
+      "yards": 317,
+      "alias": "",
+      "_id": "64c9aa773c7e801258a27a81"
+    },
+    {
+      "hole": 8,
+      "par": 4,
+      "handicap": 6,
+      "yards": 316,
+      "alias": "",
+      "_id": "64c9aa773c7e801258a27a82"
+    },
+    {
+      "hole": 9,
+      "par": 4,
+      "handicap": 4,
+      "yards": 356,
+      "alias": "",
+      "_id": "64c9aa773c7e801258a27a83"
+    },
+    {
+      "hole": 10,
+      "par": 4,
+      "handicap": 13,
+      "yards": 361,
+      "alias": "",
+      "_id": "64c9aa773c7e801258a27a84"
+    },
+    {
+      "hole": 11,
+      "par": 3,
+      "handicap": 17,
+      "yards": 144,
+      "alias": "",
+      "_id": "64c9aa773c7e801258a27a85"
+    },
+    {
+      "hole": 12,
+      "par": 4,
+      "handicap": 15,
+      "yards": 335,
+      "alias": "",
+      "_id": "64c9aa773c7e801258a27a86"
+    },
+    {
+      "hole": 13,
+      "par": 4,
+      "handicap": 3,
+      "yards": 390,
+      "alias": "",
+      "_id": "64c9aa773c7e801258a27a87"
+    },
+    {
+      "hole": 14,
+      "par": 3,
+      "handicap": 9,
+      "yards": 170,
+      "alias": "",
+      "_id": "64c9aa773c7e801258a27a88"
+    },
+    {
+      "hole": 15,
+      "par": 4,
+      "handicap": 11,
+      "yards": 383,
+      "alias": "",
+      "_id": "64c9aa773c7e801258a27a89"
+    },
+    {
+      "hole": 16,
+      "par": 5,
+      "handicap": 1,
+      "yards": 475,
+      "alias": "",
+      "_id": "64c9aa773c7e801258a27a8a"
+    },
+    {
+      "hole": 17,
+      "par": 4,
+      "handicap": 7,
+      "yards": 377,
+      "alias": "",
+      "_id": "64c9aa773c7e801258a27a8b"
+    },
+    {
+      "hole": 18,
+      "par": 4,
+      "handicap": 5,
+      "yards": 379,
+      "alias": "",
+      "_id": "64c9aa773c7e801258a27a8c"
+    }
+  ],
+  "players": [],
+  "__v": 0
+}

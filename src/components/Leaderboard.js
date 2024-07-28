@@ -68,7 +68,7 @@ function Leaderboard() {
     setIsRefreshing(true);
     try {
       const res = await fetch(
-        `${process.env.REACT_APP_API_URL}players/getTournamentPlayers/64c9aa773c7e801258a27a7a`
+        `${process.env.REACT_APP_API_URL}players/getTournamentPlayers/66a5971d57a98add4e0e1466`
       );
       const players = await res.json();
 

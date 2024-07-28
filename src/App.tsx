@@ -15,9 +15,9 @@ function App() {
   const getTournament = async () => {
     try {
       // const res = await fetch(
-      //   `${process.env.REACT_APP_API_URL}tournaments/getTournament/64c9aa773c7e801258a27a7a`
+      //   `${process.env.REACT_APP_API_URL}tournaments/getTournament/66a5971d57a98add4e0e1466`
       // );
-      const res = await fetch('/tournament-2023.json', {
+      const res = await fetch('/tournament-2024.json', {
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
